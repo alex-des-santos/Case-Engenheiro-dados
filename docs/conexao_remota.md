@@ -1,27 +1,27 @@
-# Conex„o Remota - MongoDB
+# Conex√£o Remota - MongoDB
 
 Este guia detalha como configurar e conectar a um servidor MongoDB remoto (exemplo: 192.168.22.111) para executar o desafio DataOps.
 
-## ?? Vis„o Geral
+## üåê Vis√£o Geral
 
-A conex„o remota permite executar o desafio DataOps em um servidor MongoDB localizado em outra m·quina da rede, proporcionando:
-- CentralizaÁ„o dos dados
+A conex√£o remota permite executar o desafio DataOps em um servidor MongoDB localizado em outra m√°quina da rede, proporcionando:
+- Centraliza√ß√£o dos dados
 - Maior disponibilidade
-- SeparaÁ„o entre aplicaÁ„o e banco de dados
-- Ambiente mais prÛximo ‡ produÁ„o
+- Separa√ß√£o entre aplica√ß√£o e banco de dados
+- Ambiente mais pr√≥ximo √† produ√ß√£o
 
-## ?? ConfiguraÁ„o do Servidor Remoto
+## üñ•Ô∏è Configura√ß√£o do Servidor Remoto
 
-### PrÈ-requisitos no Servidor (192.168.22.111)
+### Pr√©-requisitos no Servidor (192.168.22.111)
 
 1. **MongoDB instalado e rodando**
-2. **Firewall configurado** para permitir conexıes na porta 27017
-3. **AutenticaÁ„o configurada** (opcional, mas recomendado)
-4. **Rede acessÌvel** a partir da m·quina cliente
+2. **Firewall configurado** para permitir conex√µes na porta 27017
+3. **Autentica√ß√£o configurada** (opcional, mas recomendado)
+4. **Rede acess√≠vel** a partir da m√°quina cliente
 
-### ConfiguraÁ„o do MongoDB no Servidor
+### Configura√ß√£o do MongoDB no Servidor
 
-#### 1. Editar arquivo de configuraÁ„o
+#### 1. Editar arquivo de configura√ß√£o
 ```bash
 # No servidor remoto (192.168.22.111)
 sudo nano /etc/mongod.conf
@@ -32,11 +32,11 @@ sudo nano /etc/mongod.conf
 # /etc/mongod.conf
 net:
   port: 27017
-  bindIp: 0.0.0.0  # Permite conexıes de qualquer IP
+  bindIp: 0.0.0.0  # Permite conex√µes de qualquer IP
   # bindIp: 127.0.0.1,192.168.22.111  # Mais seguro: especificar IPs
 ```
 
-#### 3. Habilitar autenticaÁ„o (recomendado)
+#### 3. Habilitar autentica√ß√£o (recomendado)
 ```yaml
 # /etc/mongod.conf
 security:
@@ -49,345 +49,357 @@ sudo systemctl restart mongod
 sudo systemctl status mongod
 ```
 
-### ConfiguraÁ„o de Usu·rios (se autenticaÁ„o habilitada)
+### Configura√ß√£o de Usu√°rios (se autentica√ß√£o habilitada)
 
+#### 1. Conectar sem autentica√ß√£o (primeira vez)
 ```bash
-# Conectar ao MongoDB no servidor
-mongosh
+mongosh --host 192.168.22.111
+```
 
-# Criar usu·rio administrador
+#### 2. Criar usu√°rio administrador
+```javascript
 use admin
 db.createUser({
   user: "admin",
-  pwd: "senha_admin_segura",
-  roles: ["root"]
+  pwd: "senha_forte_admin",
+  roles: ["userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase"]
 })
-
-# Criar usu·rio especÌfico para o projeto
-use dataops_challenge
-db.createUser({
-  user: "dataops_user",
-  pwd: "dataops_password",
-  roles: [
-    { role: "readWrite", db: "dataops_challenge" },
-    { role: "dbAdmin", db: "dataops_challenge" }
-  ]
-})
-
-# Sair e reconectar com autenticaÁ„o
-exit
-mongosh -u admin -p senha_admin_segura --authenticationDatabase admin
 ```
 
-### ConfiguraÁ„o de Firewall no Servidor
+#### 3. Criar usu√°rio espec√≠fico para o projeto
+```javascript
+use dataops_db
+db.createUser({
+  user: "dataops_user",
+  pwd: "senha_dataops",
+  roles: [
+    { role: "readWrite", db: "dataops_db" }
+  ]
+})
+```
+
+#### 4. Sair e reconectar com autentica√ß√£o
+```bash
+exit
+mongosh --host 192.168.22.111 -u admin -p senha_forte_admin --authenticationDatabase admin
+```
+
+### Configura√ß√£o de Firewall no Servidor
 
 #### Ubuntu/Debian (UFW)
 ```bash
-# Permitir conex„o MongoDB
+# Permitir conex√£o MongoDB
+sudo ufw allow 27017
+# ou para IP espec√≠fico
 sudo ufw allow from 192.168.22.0/24 to any port 27017
-# ou para IP especÌfico
-sudo ufw allow from 192.168.22.100 to any port 27017
-
-# Verificar regras
-sudo ufw status
 ```
 
 #### CentOS/RHEL (firewalld)
 ```bash
-# Permitir porta MongoDB
+# Abrir porta
 sudo firewall-cmd --permanent --add-port=27017/tcp
 sudo firewall-cmd --reload
 
-# Ou criar zona especÌfica
+# Ou criar zona espec√≠fica
 sudo firewall-cmd --permanent --new-zone=mongodb
 sudo firewall-cmd --permanent --zone=mongodb --add-source=192.168.22.0/24
 sudo firewall-cmd --permanent --zone=mongodb --add-port=27017/tcp
 sudo firewall-cmd --reload
 ```
 
-## ??? ConfiguraÁ„o do Cliente
+## üíª Configura√ß√£o do Cliente
 
-### 1. Arquivo de ConfiguraÁ„o
+### 1. Arquivo de Configura√ß√£o
 
-Edite o arquivo `configs/remote_config.py`:
-
+Edite `configs/remote_config.py`:
 ```python
-# configs/remote_config.py
-MONGODB_CONFIG = {
+REMOTE_CONFIG = {
     'host': '192.168.22.111',
     'port': 27017,
-    'database': 'dataops_challenge',
-    'username': 'dataops_user',
-    'password': 'dataops_password',
-    'auth_source': 'dataops_challenge'  # ou 'admin'
+    'database': 'dataops_db',
+    'username': 'dataops_user',  # se autentica√ß√£o habilitada
+    'password': 'senha_dataops',  # se autentica√ß√£o habilitada
+    'authentication_source': 'dataops_db',
+    'ssl': False,  # True se SSL configurado
+    'ssl_cert_reqs': None
 }
 ```
 
-### 2. Usando Vari·veis de Ambiente (.env)
+### 2. Usando Vari√°veis de Ambiente (.env)
 
-Crie um arquivo `.env` na raiz do projeto:
-
+Crie arquivo `.env` na raiz do projeto:
 ```bash
-# .env
+# Configura√ß√£o MongoDB Remoto
 MONGO_HOST=192.168.22.111
 MONGO_PORT=27017
-MONGO_DATABASE=dataops_challenge
+MONGO_DATABASE=dataops_db
 MONGO_USERNAME=dataops_user
-MONGO_PASSWORD=dataops_password
-MONGO_AUTH_SOURCE=dataops_challenge
-MONGO_TLS=false
-MONGO_TLS_ALLOW_INVALID_CERTS=false
+MONGO_PASSWORD=senha_dataops
+MONGO_AUTH_SOURCE=dataops_db
+MONGO_SSL=false
 ```
 
-**Importante**: Adicione `.env` ao `.gitignore` para n„o versionar senhas!
+**Importante**: Adicione `.env` ao `.gitignore` para n√£o versionar senhas!
 
-### 3. ConfiguraÁ„o SSL/TLS (se necess·rio)
-
-```python
-# configs/remote_config.py
-SSL_CONFIG = {
-    'tls': True,
-    'tlsAllowInvalidCertificates': True,  # Apenas para desenvolvimento
-    'tlsCAFile': '/path/to/ca.pem',      # Certificado CA
-    'tlsCertificateKeyFile': '/path/to/client.pem'  # Certificado cliente
-}
-```
-
-## ?? ExecuÁ„o
-
-### Teste de Conectividade
+### 3. Executar o Script Remoto
 
 ```bash
-# Testar conectividade de rede
-ping 192.168.22.111
+# Usando configura√ß√£o em arquivo
+python scripts/main_remote.py
 
-# Testar porta MongoDB
+# Ou com vari√°veis de ambiente
+export MONGO_HOST=192.168.22.111
+export MONGO_USERNAME=dataops_user
+export MONGO_PASSWORD=senha_dataops
+python scripts/main_remote.py
+```
+
+## üß™ Teste de Conectividade
+
+### 1. Teste B√°sico de Rede
+```bash
+# Verificar se porta est√° aberta
 telnet 192.168.22.111 27017
 # ou
 nc -zv 192.168.22.111 27017
 ```
 
-### Teste de Conex„o MongoDB
-
+### 2. Teste MongoDB Direto
 ```bash
-# Conectar via mongosh (se instalado localmente)
-mongosh "mongodb://dataops_user:dataops_password@192.168.22.111:27017/dataops_challenge"
+# Sem autentica√ß√£o
+mongosh --host 192.168.22.111
 
-# Testar sem autenticaÁ„o
-mongosh "mongodb://192.168.22.111:27017/dataops_challenge"
+# Com autentica√ß√£o
+mongosh --host 192.168.22.111 -u dataops_user -p senha_dataops --authenticationDatabase dataops_db
 ```
 
-### Executar Script Python
-
-```bash
-# Ativar ambiente virtual
-source .venv/bin/activate  # Linux/Mac
-# ou
-.venv\Scripts\Activate.ps1  # Windows
-
-# Executar script remoto
-python scripts/main_remote.py
-```
-
-## ?? Monitoramento e Logs
-
-### No Servidor
-```bash
-# Monitorar logs do MongoDB
-sudo tail -f /var/log/mongodb/mongod.log
-
-# Monitorar conexıes ativas
-mongosh --eval "db.runCommand('currentOp')"
-
-# Verificar status do servidor
-mongosh --eval "db.runCommand('serverStatus')"
-```
-
-### No Cliente
-```bash
-# Executar com debug
-python scripts/main_remote.py --verbose
-
-# Verificar conectividade
-python -c "
+### 3. Teste com Python
+```python
 from pymongo import MongoClient
-import sys
+
 try:
-    client = MongoClient('mongodb://192.168.22.111:27017/', serverSelectionTimeoutMS=5000)
+    client = MongoClient(
+        host='192.168.22.111',
+        port=27017,
+        username='dataops_user',
+        password='senha_dataops',
+        authSource='dataops_db',
+        serverSelectionTimeoutMS=5000
+    )
+    
+    # Testar conex√£o
     client.admin.command('ping')
-    print('? Conex„o bem-sucedida!')
+    print("‚úÖ Conex√£o MongoDB remota bem-sucedida!")
+    
 except Exception as e:
-    print(f'? Erro na conex„o: {e}')
-    sys.exit(1)
-"
+    print(f"‚ùå Erro de conex√£o: {e}")
 ```
 
-## ?? Exemplos de String de Conex„o
+## üîí Configura√ß√£o SSL/TLS (Opcional)
 
-### Sem AutenticaÁ„o
-```python
-mongodb://192.168.22.111:27017/dataops_challenge
-```
+### No Servidor MongoDB
 
-### Com AutenticaÁ„o
-```python
-mongodb://usuario:senha@192.168.22.111:27017/dataops_challenge?authSource=admin
-```
-
-### Com SSL
-```python
-mongodb://usuario:senha@192.168.22.111:27017/dataops_challenge?authSource=admin&tls=true
-```
-
-### Replica Set
-```python
-mongodb://usuario:senha@mongo1.example.com:27017,mongo2.example.com:27017,mongo3.example.com:27017/dataops_challenge?replicaSet=rs0&authSource=admin
-```
-
-## ??? Troubleshooting
-
-### Erro: "Connection refused"
+#### 1. Gerar certificados
 ```bash
-# Verificar se MongoDB est· rodando no servidor
-sudo systemctl status mongod
-
-# Verificar se porta est· aberta
-sudo netstat -tlnp | grep :27017
-
-# Verificar firewall
-sudo ufw status
+# Certificado auto-assinado (desenvolvimento)
+openssl req -newkey rsa:2048 -new -x509 -days 3653 -nodes -out mongodb-cert.crt -keyout mongodb-cert.key
+cat mongodb-cert.key mongodb-cert.crt > mongodb.pem
 ```
 
-### Erro: "Authentication failed"
-```bash
-# Verificar usu·rios existentes
-mongosh -u admin -p --authenticationDatabase admin
-db.getUsers()
-
-# Recriar usu·rio se necess·rio
-db.dropUser('dataops_user')
-db.createUser({...})
-```
-
-### Erro: "Network timeout"
-```bash
-# Verificar conectividade
-ping 192.168.22.111
-traceroute 192.168.22.111
-
-# Testar porta especÌfica
-telnet 192.168.22.111 27017
-```
-
-### Erro: "SSL/TLS required"
-```python
-# Habilitar SSL na configuraÁ„o
-SSL_CONFIG = {
-    'tls': True,
-    'tlsAllowInvalidCertificates': True  # Apenas para desenvolvimento
-}
-```
-
-## ?? SeguranÁa
-
-### Boas Pr·ticas
-
-1. **Usar autenticaÁ„o sempre**
-```javascript
-// Criar usu·rios com permissıes mÌnimas
-db.createUser({
-  user: "app_user",
-  pwd: "strong_password",
-  roles: [{ role: "readWrite", db: "dataops_challenge" }]
-})
-```
-
-2. **Configurar bind IP especÌfico**
+#### 2. Configurar mongod.conf
 ```yaml
-# mongod.conf
 net:
-  bindIp: 127.0.0.1,192.168.22.111  # IPs especÌficos
-```
-
-3. **Usar SSL/TLS em produÁ„o**
-```yaml
-# mongod.conf
-net:
+  port: 27017
+  bindIp: 0.0.0.0
   tls:
     mode: requireTLS
-    certificateKeyFile: /path/to/server.pem
-    CAFile: /path/to/ca.pem
+    certificateKeyFile: /etc/ssl/mongodb.pem
 ```
 
-4. **Configurar firewall restritivo**
-```bash
-# Permitir apenas IPs especÌficos
-sudo ufw allow from 192.168.22.100 to any port 27017
-```
+### No Cliente Python
 
-5. **Monitorar logs regularmente**
-```bash
-# Configurar logrotate para MongoDB
-sudo nano /etc/logrotate.d/mongodb
-```
-
-## ?? Performance
-
-### OtimizaÁıes de Rede
 ```python
-# configs/remote_config.py
-CONNECTION_PARAMS = {
-    'maxPoolSize': 10,           # Pool de conexıes
-    'minPoolSize': 1,
-    'maxIdleTimeMS': 30000,      # 30 segundos
-    'connectTimeoutMS': 10000,   # 10 segundos para conexıes remotas
-    'socketTimeoutMS': 30000,    # 30 segundos
-    'serverSelectionTimeoutMS': 10000,
-    'retryWrites': True,
-    'w': 'majority'              # Write concern
-}
+import ssl
+from pymongo import MongoClient
+
+client = MongoClient(
+    host='192.168.22.111',
+    port=27017,
+    username='dataops_user',
+    password='senha_dataops',
+    authSource='dataops_db',
+    tls=True,
+    tlsCertificateKeyFile='/path/to/client.pem',
+    tlsCAFile='/path/to/ca.pem',
+    tlsAllowInvalidCertificates=True  # Apenas para desenvolvimento
+)
 ```
 
-### Monitoramento
+## üê≥ Usando Docker no Servidor Remoto
+
+### 1. Docker Compose no Servidor
+```yaml
+# docker-compose.yml no servidor 192.168.22.111
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin_password
+      MONGO_INITDB_DATABASE: dataops_db
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - mongodb_network
+
+volumes:
+  mongodb_data:
+
+networks:
+  mongodb_network:
+```
+
+### 2. Script de inicializa√ß√£o (mongo-init.js)
+```javascript
+// mongo-init.js
+db = db.getSiblingDB('dataops_db');
+
+db.createUser({
+  user: 'dataops_user',
+  pwd: 'senha_dataops',
+  roles: [
+    {
+      role: 'readWrite',
+      db: 'dataops_db'
+    }
+  ]
+});
+```
+
+### 3. Iniciar no servidor
 ```bash
-# No servidor, instalar MongoDB tools
-sudo apt-get install mongodb-database-tools
-
-# Monitorar operaÁıes
-mongostat --host 192.168.22.111:27017 -u admin -p
-
-# Monitorar performance
-mongotop --host 192.168.22.111:27017 -u admin -p
+# No servidor 192.168.22.111
+docker-compose up -d
 ```
 
-## ? Checklist de ConfiguraÁ„o
+## üõ†Ô∏è Troubleshooting
 
-### Servidor (192.168.22.111)
+### Problemas Comuns
+
+#### 1. Conex√£o Recusada
+```
+pymongo.errors.ServerSelectionTimeoutError: [Errno 111] Connection refused
+```
+
+**Solu√ß√µes:**
+- Verificar se MongoDB est√° rodando: `sudo systemctl status mongod`
+- Verificar bindIp no mongod.conf
+- Verificar firewall: `sudo ufw status`
+- Testar conectividade: `telnet 192.168.22.111 27017`
+
+#### 2. Erro de Autentica√ß√£o
+```
+pymongo.errors.OperationFailure: Authentication failed
+```
+
+**Solu√ß√µes:**
+- Verificar usu√°rio e senha
+- Confirmar authenticationDatabase
+- Verificar se usu√°rio tem permiss√µes na database
+
+#### 3. Timeout de Conex√£o
+```
+pymongo.errors.ServerSelectionTimeoutError: timed out
+```
+
+**Solu√ß√µes:**
+- Aumentar serverSelectionTimeoutMS
+- Verificar lat√™ncia de rede: `ping 192.168.22.111`
+- Verificar se n√£o h√° proxy/firewall bloqueando
+
+#### 4. Erro SSL/TLS
+```
+pymongo.errors.ConfigurationError: TLS is not available
+```
+
+**Solu√ß√µes:**
+- Instalar depend√™ncias TLS: `pip install pymongo[tls]`
+- Verificar certificados no servidor
+- Testar sem TLS primeiro
+
+### Logs √öteis
+
+#### No Servidor MongoDB
+```bash
+# Logs do sistema
+sudo journalctl -u mongod -f
+
+# Logs do MongoDB
+sudo tail -f /var/log/mongodb/mongod.log
+```
+
+#### No Cliente Python
+```python
+import logging
+logging.basicConfig(level=logging.DEBUG)
+```
+
+## üìä Monitoramento
+
+### 1. Status do Servidor
+```bash
+# Via mongosh
+mongosh --host 192.168.22.111 -u admin -p admin_password --eval "db.serverStatus()"
+```
+
+### 2. Conex√µes Ativas
+```javascript
+// No mongosh
+db.serverStatus().connections
+```
+
+### 3. M√©tricas de Performance
+```javascript
+// No mongosh
+db.serverStatus().opcounters
+db.serverStatus().network
+```
+
+## ‚úÖ Checklist de Configura√ß√£o
+
+### Servidor MongoDB
 - [ ] MongoDB instalado e rodando
-- [ ] ConfiguraÁ„o de bind IP atualizada
-- [ ] Firewall configurado
-- [ ] Usu·rios criados (se autenticaÁ„o habilitada)
-- [ ] SSL/TLS configurado (se necess·rio)
+- [ ] bindIp configurado para aceitar conex√µes externas
+- [ ] Firewall liberado para porta 27017
+- [ ] Usu√°rios criados (se autentica√ß√£o habilitada)
+- [ ] SSL configurado (se necess√°rio)
+- [ ] Logs monitorados
 
-### Cliente
-- [ ] DependÍncias Python instaladas
-- [ ] Arquivo de configuraÁ„o atualizado
-- [ ] Vari·veis de ambiente configuradas
-- [ ] Conectividade testada
-- [ ] Script executado com sucesso
+### Cliente Python
+- [ ] Arquivo .env configurado
+- [ ] Depend√™ncias instaladas (pymongo)
+- [ ] Teste de conectividade realizado
+- [ ] Scripts executados com sucesso
+- [ ] Dados inseridos e consultados
 
-## ?? PrÛximos Passos
+### Rede
+- [ ] Conectividade IP verificada
+- [ ] Porta 27017 acess√≠vel
+- [ ] DNS resolvendo (se usando hostname)
+- [ ] Sem proxy/firewall bloqueando
+- [ ] Lat√™ncia de rede aceit√°vel
 
-1. **Implementar backup automatizado**
-2. **Configurar replicaÁ„o** (se necess·rio)
-3. **Implementar monitoramento** avanÁado
-4. **Configurar alertas** de performance
-5. **Documentar procedimentos** de disaster recovery
+---
 
-## ?? Suporte
+**Pr√≥ximos Passos:**
+1. Configurar servidor remoto seguindo este guia
+2. Testar conectividade b√°sica
+3. Executar `python scripts/main_remote.py`
+4. Verificar dados no MongoDB Compass
+5. Monitorar logs para troubleshooting
 
-Para problemas de conex„o remota:
-1. Verificar logs do servidor: `/var/log/mongodb/mongod.log`
-2. Testar conectividade de rede
-3. Validar configuraÁıes de firewall
-4. Confirmar credenciais de autenticaÁ„o
+Para d√∫vidas espec√≠ficas, consulte a [documenta√ß√£o do MongoDB](https://docs.mongodb.com/) ou abra uma issue no reposit√≥rio.

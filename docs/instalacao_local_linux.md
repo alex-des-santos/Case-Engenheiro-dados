@@ -1,385 +1,557 @@
-# InstalaÁ„o Local - Linux
+# Instala√ß√£o Local - Linux
 
-Este guia detalha como instalar e configurar o MongoDB localmente no Linux para executar o desafio DataOps.
+Este guia detalha a instala√ß√£o e configura√ß√£o do ambiente para executar o desafio DataOps em sistemas Linux (Ubuntu, Debian, CentOS, Fedora).
 
-## ?? PrÈ-requisitos
+## üêß Pr√©-requisitos
 
-- Ubuntu 20.04+ / Debian 10+ / CentOS 8+ / RHEL 8+
-- Python 3.8 ou superior
-- PrivilÈgios sudo
-- Conex„o com internet
+- Sistema Linux (Ubuntu 20.04+, Debian 11+, CentOS 8+, Fedora 35+)
+- Usu√°rio com privil√©gios sudo
+- Conex√£o com internet
+- 2GB de RAM dispon√≠vel
+- 5GB de espa√ßo em disco
 
-## ?? InstalaÁ„o
+## üöÄ Instala√ß√£o R√°pida
 
-### Ubuntu/Debian
-
-#### 1. Importar chave p˙blica MongoDB
+### Script Automatizado
 ```bash
-# Importar chave GPG
+# Download e execu√ß√£o do script de instala√ß√£o
+curl -fsSL https://raw.githubusercontent.com/SEU-USUARIO/Case-Engenheiro-dados/main/scripts/install_linux.sh | bash
+```
+
+## üìã Instala√ß√£o Manual Detalhada
+
+### 1. Atualizar Sistema
+
+#### Ubuntu/Debian
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+#### CentOS/RHEL/Fedora
+```bash
+# CentOS/RHEL 8+
+sudo dnf update -y
+
+# Fedora
+sudo dnf update -y
+
+# CentOS 7 (se aplic√°vel)
+sudo yum update -y
+```
+
+### 2. Instalar Python 3.8+
+
+#### Ubuntu/Debian
+```bash
+# Verificar vers√£o atual
+python3 --version
+
+# Se vers√£o < 3.8, instalar
+sudo apt install python3.8 python3.8-venv python3.8-dev python3-pip -y
+
+# Criar link simb√≥lico (opcional)
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
+```
+
+#### CentOS/RHEL/Fedora
+```bash
+# Verificar vers√£o
+python3 --version
+
+# Instalar se necess√°rio
+sudo dnf install python3 python3-pip python3-venv python3-devel -y
+
+# CentOS 7 (Python 3.8 via Software Collections)
+sudo yum install centos-release-scl -y
+sudo yum install rh-python38 -y
+scl enable rh-python38 bash
+```
+
+### 3. Instalar Git
+
+#### Ubuntu/Debian
+```bash
+sudo apt install git -y
+```
+
+#### CentOS/RHEL/Fedora
+```bash
+sudo dnf install git -y
+```
+
+#### Configurar Git
+```bash
+git config --global user.name "Seu Nome"
+git config --global user.email "seu.email@example.com"
+```
+
+### 4. Instalar MongoDB
+
+#### M√©todo 1: Reposit√≥rio Oficial (Recomendado)
+
+##### Ubuntu
+```bash
+# Importar chave p√∫blica
 wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | sudo apt-key add -
 
-# Adicionar repositÛrio MongoDB
+# Adicionar reposit√≥rio
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+
+# Atualizar e instalar
+sudo apt update
+sudo apt install mongodb-org -y
 ```
 
-#### 2. Instalar MongoDB
+##### CentOS/RHEL/Fedora
 ```bash
-# Atualizar lista de pacotes
-sudo apt-get update
-
-# Instalar MongoDB Community Edition
-sudo apt-get install -y mongodb-org
-
-# Fixar vers„o (evitar updates autom·ticos)
-echo "mongodb-org hold" | sudo dpkg --set-selections
-echo "mongodb-org-database hold" | sudo dpkg --set-selections
-echo "mongodb-org-server hold" | sudo dpkg --set-selections
-echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
-echo "mongodb-org-tools hold" | sudo dpkg --set-selections
-```
-
-#### 3. Iniciar e habilitar serviÁo
-```bash
-# Iniciar MongoDB
-sudo systemctl start mongod
-
-# Habilitar inicializaÁ„o autom·tica
-sudo systemctl enable mongod
-
-# Verificar status
-sudo systemctl status mongod
-```
-
-### CentOS/RHEL
-
-#### 1. Criar arquivo de repositÛrio
-```bash
-sudo tee /etc/yum.repos.d/mongodb-org-7.0.repo << 'EOF'
+# Criar arquivo de reposit√≥rio
+sudo tee /etc/yum.repos.d/mongodb-org-7.0.repo << EOF
 [mongodb-org-7.0]
 name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/7.0/x86_64/
+baseurl=https://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/7.0/x86_64/
 gpgcheck=1
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-7.0.asc
 EOF
+
+# Instalar
+sudo dnf install mongodb-org -y
 ```
 
-#### 2. Instalar MongoDB
+#### M√©todo 2: Docker (Alternativo)
 ```bash
-# Instalar MongoDB
-sudo yum install -y mongodb-org
+# Instalar Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
 
-# Ou para systems com dnf
-sudo dnf install -y mongodb-org
+# Reiniciar sess√£o ou executar
+newgrp docker
+
+# Executar MongoDB via Docker
+docker run -d --name mongodb -p 27017:27017 mongo:7.0
 ```
 
-#### 3. Configurar SELinux (se habilitado)
+### 5. Configurar e Iniciar MongoDB
+
+#### Iniciar servi√ßo
 ```bash
-# Verificar se SELinux est· ativo
-sestatus
-
-# Se ativo, configurar polÌticas
-sudo setsebool -P mongod_exec_t on
-```
-
-#### 4. Iniciar serviÁo
-```bash
-# Iniciar MongoDB
-sudo systemctl start mongod
-
-# Habilitar inicializaÁ„o autom·tica
+# Habilitar e iniciar
 sudo systemctl enable mongod
+sudo systemctl start mongod
 
 # Verificar status
 sudo systemctl status mongod
 ```
 
-## ?? ConfiguraÁ„o do Ambiente
-
-### 1. Configurar Python
+#### Configurar MongoDB (opcional)
 ```bash
-# Instalar Python e pip (se n„o instalado)
-# Ubuntu/Debian
-sudo apt-get install -y python3 python3-pip python3-venv
+# Editar configura√ß√£o
+sudo nano /etc/mongod.conf
 
-# CentOS/RHEL
-sudo yum install -y python3 python3-pip
-# ou
-sudo dnf install -y python3 python3-pip
+# Exemplo de configura√ß√£o b√°sica
+storage:
+  dbPath: /var/lib/mongo
+  journal:
+    enabled: true
 
-# Verificar instalaÁ„o
-python3 --version
-pip3 --version
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+
+net:
+  port: 27017
+  bindIp: 127.0.0.1
+
+processManagement:
+  fork: true
+  pidFilePath: /var/run/mongodb/mongod.pid
 ```
 
-### 2. Configurar projeto
+#### Testar conex√£o
 ```bash
-# Clonar/navegar para o projeto
-cd /path/to/Case-Engenheiro-dados
+# Via mongosh (MongoDB Shell)
+mongosh
 
+# Comando de teste
+> db.runCommand({connectionStatus: 1})
+> exit
+```
+
+### 6. Clonar Reposit√≥rio
+
+```bash
+# Navegar para diret√≥rio de projetos
+cd ~/Projects  # ou local preferido
+
+# Clonar reposit√≥rio
+git clone https://github.com/SEU-USUARIO/Case-Engenheiro-dados.git
+cd Case-Engenheiro-dados
+```
+
+### 7. Configurar Ambiente Virtual Python
+
+```bash
 # Criar ambiente virtual
 python3 -m venv .venv
 
 # Ativar ambiente virtual
 source .venv/bin/activate
 
+# Verificar se est√° ativo
+which python
+# Deve retornar: ~/Projects/Case-Engenheiro-dados/.venv/bin/python
+
 # Atualizar pip
 pip install --upgrade pip
+```
 
-# Instalar dependÍncias
+### 8. Instalar Depend√™ncias Python
+
+```bash
+# Instalar depend√™ncias do projeto
 pip install -r requirements.txt
+
+# Verificar instala√ß√£o
+pip list
 ```
 
-### 3. Configurar permissıes
-```bash
-# Garantir que o usu·rio mongodb possui as permissıes corretas
-sudo chown -R mongodb:mongodb /var/lib/mongodb
-sudo chown -R mongodb:mongodb /var/log/mongodb
+### 9. Configurar Vari√°veis de Ambiente (Opcional)
 
-# Configurar limites de arquivo (se necess·rio)
-echo "mongodb soft nofile 64000" | sudo tee -a /etc/security/limits.conf
-echo "mongodb hard nofile 64000" | sudo tee -a /etc/security/limits.conf
+```bash
+# Copiar template
+cp .env.example .env
+
+# Editar se necess√°rio
+nano .env
+
+# Exemplo de conte√∫do .env para local
+MONGO_HOST=localhost
+MONGO_PORT=27017
+MONGO_DATABASE=dataops_db
+MONGO_USERNAME=
+MONGO_PASSWORD=
 ```
 
-## ?? ExecuÁ„o
+## üß™ Teste da Instala√ß√£o
 
+### 1. Teste de Depend√™ncias
 ```bash
-# Verificar se MongoDB est· rodando
-sudo systemctl status mongod
+python test_dependencies.py
+```
 
-# Se n„o estiver rodando
-sudo systemctl start mongod
+**Sa√≠da esperada:**
+```
+‚úÖ Python 3.8+ - OK
+‚úÖ Pandas - OK  
+‚úÖ PyMongo - OK
+‚úÖ Colorama - OK
+‚úÖ MongoDB Connection - OK
+```
 
-# Ativar ambiente virtual
-source .venv/bin/activate
+### 2. Teste Simples
+```bash
+python simple_test.py
+```
 
-# Executar script principal
+### 3. Execu√ß√£o do Projeto
+```bash
 python scripts/main_local.py
 ```
 
-## ?? Estrutura de Arquivos Linux
+**Sa√≠da esperada:**
+```
+üöÄ Iniciando Desafio DataOps - MongoDB & Python
+üìä Criando DataFrames...
+‚úÖ DataFrame Carros criado com 5 registros
+‚úÖ DataFrame Montadoras criado com 5 registros
+üîó Conectando ao MongoDB local...
+‚úÖ Conex√£o estabelecida com sucesso
+üì• Inserindo dados no MongoDB...
+‚úÖ Collections criadas e populadas
+üîÑ Executando agrega√ß√£o...
+‚úÖ Agrega√ß√£o executada com sucesso
+üíæ Exportando resultados...
+‚úÖ Arquivos JSON exportados
+üéâ Desafio conclu√≠do com sucesso!
+```
 
-### LocalizaÁıes importantes:
-- **Arquivos de configuraÁ„o**: `/etc/mongod.conf`
-- **Dados**: `/var/lib/mongodb`
-- **Logs**: `/var/log/mongodb/mongod.log`
-- **Execut·veis**: `/usr/bin/mongo*`
+## üìä Ferramentas de Monitoramento
 
-### ConfiguraÁ„o customizada (se necess·rio):
+### 1. MongoDB Compass (GUI)
+
+#### Ubuntu/Debian
 ```bash
-# Editar configuraÁ„o
+# Download e instala√ß√£o
+wget https://downloads.mongodb.com/compass/mongodb-compass_1.40.4_amd64.deb
+sudo dpkg -i mongodb-compass_1.40.4_amd64.deb
+sudo apt-get install -f
+
+# Executar
+mongodb-compass
+```
+
+#### CentOS/RHEL/Fedora
+```bash
+# Download
+wget https://downloads.mongodb.com/compass/mongodb-compass-1.40.4.x86_64.rpm
+sudo rpm -ivh mongodb-compass-1.40.4.x86_64.rpm
+
+# Executar
+mongodb-compass
+```
+
+### 2. Mongo Shell (CLI)
+```bash
+# Instalar mongosh separadamente se necess√°rio
+curl -fsSL https://mongocli.s3.amazonaws.com/install.sh | sudo sh
+
+# Conectar
+mongosh mongodb://localhost:27017
+
+# Comandos √∫teis
+> show dbs
+> use dataops_db
+> show collections
+> db.carros.find().pretty()
+> db.montadoras.find().pretty()
+```
+
+## üê≥ Alternativa com Docker
+
+### 1. Instalar Docker e Docker Compose
+
+#### Ubuntu/Debian
+```bash
+# Instalar Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+
+# Instalar Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Reiniciar sess√£o
+newgrp docker
+```
+
+### 2. Executar com Docker
+```bash
+# Subir MongoDB via Docker Compose
+docker-compose -f docker/docker-compose.yml up -d
+
+# Verificar containers
+docker ps
+
+# Executar aplica√ß√£o
+python scripts/main_local.py
+
+# Parar containers
+docker-compose -f docker/docker-compose.yml down
+```
+
+## üîß Troubleshooting
+
+### Problemas Comuns
+
+#### 1. MongoDB n√£o inicia
+```bash
+# Verificar logs
+sudo journalctl -u mongod -f
+
+# Verificar configura√ß√£o
 sudo nano /etc/mongod.conf
 
-# Reiniciar apÛs mudanÁas
+# Reiniciar servi√ßo
 sudo systemctl restart mongod
 ```
 
-## ??? Comandos ⁄teis
-
-### Gerenciamento do ServiÁo
+#### 2. Python n√£o encontrado
 ```bash
-# Status do serviÁo
+# Verificar vers√£o
+python3 --version
+
+# Criar link simb√≥lico
+sudo ln -sf /usr/bin/python3 /usr/bin/python
+```
+
+#### 3. Permiss√µes de MongoDB
+```bash
+# Corrigir permiss√µes
+sudo chown -R mongodb:mongodb /var/lib/mongo
+sudo chown mongodb:mongodb /var/log/mongodb/mongod.log
+sudo systemctl restart mongod
+```
+
+#### 4. Erro de conex√£o PyMongo
+```bash
+# Verificar se MongoDB est√° rodando
 sudo systemctl status mongod
 
-# Iniciar serviÁo
-sudo systemctl start mongod
+# Testar conex√£o
+mongosh --eval "db.runCommand({connectionStatus: 1})"
 
-# Parar serviÁo
-sudo systemctl stop mongod
-
-# Reiniciar serviÁo
-sudo systemctl restart mongod
-
-# Ver logs em tempo real
-sudo tail -f /var/log/mongodb/mongod.log
-
-# Ver logs do systemd
-sudo journalctl -u mongod -f
-```
-
-### Conex„o e Teste
-```bash
-# Conectar ao MongoDB shell
-mongosh
-# ou (versıes antigas)
-mongo
-
-# Testar conex„o
-mongosh --eval "db.runCommand('ping')"
-
-# Conectar a database especÌfica
-mongosh dataops_challenge
-```
-
-### Monitoramento
-```bash
-# Verificar processos MongoDB
-ps aux | grep mongod
-
-# Verificar porta em uso
-netstat -tlnp | grep :27017
-# ou
-ss -tlnp | grep :27017
-
-# Verificar uso de recursos
-top -p $(pgrep mongod)
-```
-
-## ?? Firewall
-
-### Ubuntu/Debian (UFW)
-```bash
-# Habilitar UFW (se n„o habilitado)
-sudo ufw enable
-
-# Permitir MongoDB
-sudo ufw allow 27017/tcp
-
-# Verificar regras
+# Verificar firewall
 sudo ufw status
 ```
 
-### CentOS/RHEL (firewalld)
+#### 5. Ambiente virtual n√£o ativa
 ```bash
-# Abrir porta MongoDB
-sudo firewall-cmd --permanent --add-port=27017/tcp
+# Verificar se est√° no diret√≥rio correto
+pwd
 
-# Recarregar firewall
-sudo firewall-cmd --reload
+# Ativar novamente
+source .venv/bin/activate
 
-# Verificar regras
-sudo firewall-cmd --list-ports
+# Verificar Python
+which python
 ```
 
-## ?? Alternativa com Docker
+### Logs √öteis
 
-Se preferir usar Docker:
-
+#### MongoDB
 ```bash
-# Instalar Docker (Ubuntu)
-sudo apt-get update
-sudo apt-get install -y docker.io
-sudo systemctl start docker
-sudo systemctl enable docker
+# Logs do sistema
+sudo journalctl -u mongod
 
-# Adicionar usu·rio ao grupo docker
-sudo usermod -aG docker $USER
-# Fazer logout/login para aplicar
-
-# Executar MongoDB via Docker
-docker run -d \
-  --name mongodb-dataops \
-  -p 27017:27017 \
-  -v mongodb_data:/data/db \
-  mongo:7.0
-
-# Verificar container
-docker ps
-
-# Conectar ao MongoDB no container
-docker exec -it mongodb-dataops mongosh
+# Logs do MongoDB
+sudo tail -f /var/log/mongodb/mongod.log
 ```
 
-## ??? Troubleshooting
-
-### Problema: "Failed to start mongod"
+#### Aplica√ß√£o Python
 ```bash
-# Verificar logs
-sudo journalctl -u mongod -n 50
+# Executar com logs detalhados
+python -v scripts/main_local.py
 
-# Verificar permissıes
-sudo chown -R mongodb:mongodb /var/lib/mongodb
-sudo chown -R mongodb:mongodb /var/log/mongodb
-
-# Verificar configuraÁ„o
-sudo mongod --config /etc/mongod.conf --fork
-```
-
-### Problema: "Address already in use"
-```bash
-# Verificar processo usando porta 27017
-sudo lsof -i :27017
-
-# Terminar processo se necess·rio
-sudo kill -9 <PID>
-
-# Ou parar serviÁo MongoDB
-sudo systemctl stop mongod
-```
-
-### Problema: "Permission denied"
-```bash
-# Verificar propriet·rio dos diretÛrios
-ls -la /var/lib/mongodb
-ls -la /var/log/mongodb
-
-# Corrigir permissıes
-sudo chown -R mongodb:mongodb /var/lib/mongodb
-sudo chown -R mongodb:mongodb /var/log/mongodb
-sudo chmod 755 /var/lib/mongodb
-sudo chmod 755 /var/log/mongodb
-```
-
-### Problema: Python n„o encontrado
-```bash
-# Ubuntu/Debian
-sudo apt-get install -y python3 python3-pip python3-venv
-
-# CentOS/RHEL
-sudo yum install -y python3 python3-pip
-# ou
-sudo dnf install -y python3 python3-pip
-
-# Criar link simbÛlico se necess·rio
-sudo ln -s /usr/bin/python3 /usr/bin/python
-```
-
-## ?? ValidaÁ„o da InstalaÁ„o
-
-```bash
-# 1. Verificar serviÁo MongoDB
-sudo systemctl is-active mongod
-# Deve retornar: active
-
-# 2. Testar conex„o
-mongosh --eval "db.runCommand('ping')"
-# Deve retornar: { ok: 1 }
-
-# 3. Verificar vers„o
-mongod --version
-
-# 4. Executar script de teste
+# Ou usar logging interno
+export LOG_LEVEL=DEBUG
 python scripts/main_local.py
 ```
 
-## ? Checklist Final
+## ‚öôÔ∏è Configura√ß√µes Avan√ßadas
 
-- [ ] MongoDB instalado e rodando
+### 1. MongoDB com Autentica√ß√£o
+
+#### Habilitar autentica√ß√£o
+```bash
+# Editar configura√ß√£o
+sudo nano /etc/mongod.conf
+
+# Adicionar:
+security:
+  authorization: enabled
+```
+
+#### Criar usu√°rio administrador
+```bash
+# Conectar sem autentica√ß√£o
+mongosh
+
+# Criar usu√°rio admin
+use admin
+db.createUser({
+  user: "admin",
+  pwd: "senha_forte",
+  roles: ["userAdminAnyDatabase", "dbAdminAnyDatabase"]
+})
+exit
+
+# Reiniciar MongoDB
+sudo systemctl restart mongod
+
+# Conectar com autentica√ß√£o
+mongosh -u admin -p senha_forte --authenticationDatabase admin
+```
+
+### 2. Configura√ß√£o de Rede
+
+#### Permitir conex√µes externas
+```bash
+# Editar configura√ß√£o
+sudo nano /etc/mongod.conf
+
+# Alterar bindIp
+net:
+  port: 27017
+  bindIp: 0.0.0.0  # Cuidado: permite qualquer IP
+
+# Reiniciar
+sudo systemctl restart mongod
+```
+
+#### Configurar firewall
+```bash
+# UFW (Ubuntu/Debian)
+sudo ufw allow 27017
+
+# Firewalld (CentOS/RHEL/Fedora)
+sudo firewall-cmd --permanent --add-port=27017/tcp
+sudo firewall-cmd --reload
+```
+
+## üìà Otimiza√ß√£o de Performance
+
+### 1. Configura√ß√µes MongoDB
+```yaml
+# /etc/mongod.conf
+storage:
+  engine: wiredTiger
+  wiredTiger:
+    engineConfig:
+      cacheSizeGB: 1  # Ajustar conforme RAM dispon√≠vel
+
+operationProfiling:
+  slowOpThresholdMs: 100
+
+setParameter:
+  logLevel: 1
+```
+
+### 2. √çndices (para datasets maiores)
+```javascript
+// Via mongosh
+use dataops_db
+
+// Criar √≠ndices √∫teis
+db.carros.createIndex({ "montadora": 1 })
+db.montadoras.createIndex({ "montadora": 1 })
+db.montadoras.createIndex({ "pais": 1 })
+```
+
+## ‚úÖ Checklist de Instala√ß√£o
+
+- [ ] Sistema Linux atualizado
 - [ ] Python 3.8+ instalado
-- [ ] Ambiente virtual criado e ativado
-- [ ] DependÍncias Python instaladas
-- [ ] Firewall configurado (se necess·rio)
+- [ ] Git configurado
+- [ ] MongoDB 7.0+ instalado e rodando
+- [ ] Reposit√≥rio clonado
+- [ ] Ambiente virtual criado e ativo
+- [ ] Depend√™ncias Python instaladas
+- [ ] Teste de depend√™ncias passou
 - [ ] Script principal executado com sucesso
-- [ ] Arquivos JSON exportados
+- [ ] MongoDB Compass instalado (opcional)
+- [ ] Docker configurado (opcional)
 
-## ?? PrÛximos Passos
+## üéØ Pr√≥ximos Passos
 
-1. Instalar MongoDB Compass para interface gr·fica:
-   ```bash
-   # Ubuntu/Debian
-   wget https://downloads.mongodb.com/compass/mongodb-compass_1.40.4_amd64.deb
-   sudo dpkg -i mongodb-compass_1.40.4_amd64.deb
-   
-   # CentOS/RHEL
-   wget https://downloads.mongodb.com/compass/mongodb-compass-1.40.4.x86_64.rpm
-   sudo rpm -i mongodb-compass-1.40.4.x86_64.rpm
-   ```
+1. **Explorar dados**: Use MongoDB Compass para visualizar collections
+2. **Modificar scripts**: Experimente alterar os dados ou agrega√ß√µes
+3. **Testar conex√£o remota**: Configure um servidor MongoDB remoto
+4. **Monitorar performance**: Use ferramentas de monitoramento
+5. **Contribuir**: Fa√ßa melhorias e abra Pull Requests
 
-2. Configurar backup autom·tico
-3. Explorar conex„o remota
+---
 
-## ?? Suporte
+**Dica**: Mantenha sempre o ambiente virtual ativo ao trabalhar no projeto:
+```bash
+source .venv/bin/activate
+```
 
-- **DocumentaÁ„o oficial**: https://docs.mongodb.com/manual/administration/install-on-linux/
-- **Logs do sistema**: `sudo journalctl -u mongod`
-- **Logs do MongoDB**: `/var/log/mongodb/mongod.log`
+Para desativar:
+```bash
+deactivate
+```
+
+**Suporte**: Para problemas espec√≠ficos do Linux, consulte a documenta√ß√£o da sua distribui√ß√£o ou abra uma issue no reposit√≥rio.
