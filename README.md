@@ -1,6 +1,6 @@
 # Desafio DataOps - MongoDB & Python
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-success)](https://SEU-USUARIO.github.io/Case-Engenheiro-dados/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-success)](https://alex-des-santos.github.io/Case-Engenheiro-dados/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-7.0%2B-green)](https://mongodb.com)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -17,7 +17,7 @@ Desenvolver um sistema de processamento de dados que:
 
 ## 📖 Documentação Interativa
 
-**[📚 Acesse o Guia Completo](https://SEU-USUARIO.github.io/Case-Engenheiro-dados/)**
+**[📚 Acesse o Guia Completo](https://alex-des-santos.github.io/Case-Engenheiro-dados/)**
 
 O guia interativo contém:
 - Instruções passo a passo para Windows, Linux e Docker
@@ -30,7 +30,7 @@ O guia interativo contém:
 ### Local (Windows)
 ```powershell
 # Clonar repositório
-git clone https://github.com/SEU-USUARIO/Case-Engenheiro-dados.git
+git clone https://github.com/alex-des-santos/Case-Engenheiro-dados.git
 cd Case-Engenheiro-dados
 
 # Ambiente virtual
@@ -47,7 +47,7 @@ python scripts/main_local.py
 ### Local (Linux)
 ```bash
 # Clonar repositório
-git clone https://github.com/SEU-USUARIO/Case-Engenheiro-dados.git
+git clone https://github.com/alex-des-santos/Case-Engenheiro-dados.git
 cd Case-Engenheiro-dados
 
 # Ambiente virtual
@@ -172,7 +172,7 @@ A agregação final agrupa os carros por país da montadora:
 
 ### Instalação de Desenvolvimento
 ```bash
-git clone https://github.com/SEU-USUARIO/Case-Engenheiro-dados.git
+git clone https://github.com/alex-des-santos/Case-Engenheiro-dados.git
 cd Case-Engenheiro-dados
 python -m venv .venv
 source .venv/bin/activate  # Linux/Mac
@@ -213,9 +213,9 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para de
 
 ## 📞 Contato
 
-**Nome do Desenvolvedor**
-- GitHub: [@SEU-USUARIO](https://github.com/alex-des-santos)
-- LinkedIn: [Seu LinkedIn](https://linkedin.com/in/alex-des-santos)
+**Alex dos Santos**
+- GitHub: [@alex-des-santos](https://github.com/alex-des-santos)
+- LinkedIn: [Alex dos Santos](https://linkedin.com/in/alex-des-santos)
 - Email: eu@alexsantos.pro
 
 ---
