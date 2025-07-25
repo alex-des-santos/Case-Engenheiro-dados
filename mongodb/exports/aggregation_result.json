@@ -1,0 +1,47 @@
+[
+  {
+    "_id": "Alemanha",
+    "carros": [
+      {
+        "carro": "Polo",
+        "cor": "Branco",
+        "montadora": "Volkswagen"
+      }
+    ]
+  },
+  {
+    "_id": "EUA",
+    "carros": [
+      {
+        "carro": "Onix",
+        "cor": "Prata",
+        "montadora": "Chevrolet"
+      },
+      {
+        "carro": "Fiesta",
+        "cor": "Vermelho",
+        "montadora": "Ford"
+      }
+    ]
+  },
+  {
+    "_id": "França",
+    "carros": [
+      {
+        "carro": "Sandero",
+        "cor": "Prata",
+        "montadora": "Renault"
+      }
+    ]
+  },
+  {
+    "_id": "Japão",
+    "carros": [
+      {
+        "carro": "City",
+        "cor": "Preto",
+        "montadora": "Honda"
+      }
+    ]
+  }
+]

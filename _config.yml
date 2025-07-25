@@ -1,0 +1,42 @@
+# GitHub Pages Configuration
+
+# Build settings
+source: docs
+destination: _site
+
+# Markdown settings
+markdown: kramdown
+highlighter: rouge
+
+# Collection settings
+collections_dir: docs
+
+# Exclude from processing
+exclude:
+  - .gitignore
+  - .github/
+  - .venv/
+  - README.md
+  - requirements.txt
+  - scripts/
+  - configs/
+  - mongodb/
+  - docker/
+
+# Include these files
+include:
+  - _headers
+  - _redirects
+
+# Site settings
+title: "Desafio DataOps - MongoDB & Python"
+description: "Guia interativo para implementação completa de pipeline de dados"
+url: "https://SEU-USUARIO.github.io"
+baseurl: "/Case-Engenheiro-dados"
+
+# SEO settings
+lang: pt-BR
+author: "Nome do Desenvolvedor"
+
+# Social media
+github_username: SEU-USUARIO

@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # MongoDB para desenvolvimento local
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb-dataops
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin_password
+      MONGO_INITDB_DATABASE: dataops_challenge
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+      - ./mongodb/setup:/docker-entrypoint-initdb.d:ro
+    networks:
+      - dataops-network
+    command: ["mongod", "--auth"]
+
+  # MongoDB Compass (interface web - opcional)
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express-dataops
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin_password
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin_password@mongodb:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+    depends_on:
+      - mongodb
+    networks:
+      - dataops-network
+
+  # Aplicação Python (opcional)
+  dataops-app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: dataops-python-app
+    restart: unless-stopped
+    environment:
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      MONGO_DATABASE: dataops_challenge
+      MONGO_USERNAME: admin
+      MONGO_PASSWORD: admin_password
+      MONGO_AUTH_SOURCE: admin
+    volumes:
+      - .:/app/workspace
+      - ./mongodb/exports:/app/exports
+    depends_on:
+      - mongodb
+    networks:
+      - dataops-network
+    profiles:
+      - app  # Use: docker-compose --profile app up
+
+volumes:
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+
+networks:
+  dataops-network:
+    driver: bridge
+
+# Configurações adicionais para desenvolvimento
+x-common-variables: &common-variables
+  PYTHONPATH: /app
+  PYTHONUNBUFFERED: 1

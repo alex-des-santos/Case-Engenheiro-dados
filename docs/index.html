@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio DataOps - MongoDB & Python</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        nav {
+            background: #34495e;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            display: block;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav a:hover {
+            background: #2c3e50;
+        }
+
+        nav a.active {
+            background: #e74c3c;
+            border-bottom-color: #c0392b;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+        }
+
+        .content-card h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 400;
+        }
+
+        .progress-container {
+            background: #ecf0f1;
+            border-radius: 6px;
+            height: 12px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            height: 100%;
+            width: 0%;
+            border-radius: 6px;
+            transition: width 2s ease;
+        }
+
+        .step-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .step-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .step-item.completed {
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -8px;
+            left: 15px;
+            background: #3498db;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .step-item.completed .step-number {
+            background: #28a745;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1.5rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 0.75rem;
+            right: 1rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background: #2980b9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+            font-weight: 500;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #e3f2fd;
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            color: #1565c0;
+        }
+
+        .alert-success {
+            background: #e8f5e8;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .alert-warning {
+            background: #fff3e0;
+            border-color: #ff9800;
+            color: #ef6c00;
+        }
+
+        .alert-danger {
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+
+        .tab-navigation {
+            display: flex;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 2rem;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #6c757d;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+
+        .tab-button:hover {
+            color: #2980b9;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 3px solid #3498db;
+        }
+
+        .feature-card h4 {
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .code-inline {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            display: inline-block;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .status-complete {
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .content-card {
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Desafio DataOps</h1>
+            <p>Implementação completa MongoDB & Python - Local e Remota</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#overview" class="nav-link active">Visão Geral</a></li>
+                <li><a href="#dados" class="nav-link">Dados</a></li>
+                <li><a href="#local" class="nav-link">Instalação Local</a></li>
+                <li><a href="#remoto" class="nav-link">Conexão Remota</a></li>
+                <li><a href="#execucao" class="nav-link">Execução</a></li>
+                <li><a href="#resultados" class="nav-link">Resultados</a></li>
+                <li><a href="#troubleshooting" class="nav-link">Ajuda</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <!-- Visão Geral -->
+            <section id="overview" class="section active">
+                <div class="content-card">
+                    <h2>Visão Geral do Projeto</h2>
+                    
+                    <div class="alert alert-info">
+                        <strong>Objetivo:</strong> Implementar um pipeline de dados completo usando Python e MongoDB, com suporte para instalação local e conexão remota ao servidor 192.168.22.111.
+                    </div>
+
+                    <h3>Status do Desafio</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="main-progress"></div>
+                    </div>
+                    <p><strong>Progresso:</strong> <span class="status-complete">6/6 etapas completas</span></p>
+
+                    <div class="step-grid">
+                        <div class="step-item completed">
+                            <div class="step-number">1</div>
+                            <div class="step-title">DataFrames Criados</div>
+                            <p>Estruturas de dados pandas com informações de carros e montadoras implementadas</p>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">2</div>
+                            <div class="step-title">MongoDB Conectado</div>
+                            <p>Conexão local e remota configurada com tratamento de erros robusto</p>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">3</div>
+                            <div class="step-title">Collections Salvas</div>
+                            <p>Dados persistidos nas collections 'carros' e 'montadoras' do MongoDB</p>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">4</div>
+                            <div class="step-title">Agregação Criada</div>
+                            <p>Pipeline MongoDB desenvolvido para relacionar collections</p>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">5</div>
+                            <div class="step-title">Agrupamento por País</div>
+                            <p>Resultado final organizado por país de origem das montadoras</p>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">6</div>
+                            <div class="step-title">Exportação JSON</div>
+                            <p>Collections e resultado da agregação exportados para arquivos JSON</p>
+                        </div>
+                    </div>
+
+                    <h3>Soluções Implementadas</h3>
+                    <div class="tab-navigation">
+                        <button class="tab-button active" onclick="showTab('overview-local')">Local</button>
+                        <button class="tab-button" onclick="showTab('overview-remote')">Remoto</button>
+                        <button class="tab-button" onclick="showTab('overview-docker')">Docker</button>
+                    </div>
+
+                    <div id="overview-local" class="tab-content active">
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h4>Multi-plataforma</h4>
+                                <p>Scripts otimizados para Windows e Linux com documentação específica</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Interface Amigável</h4>
+                                <p>Feedback visual colorido e logs detalhados durante a execução</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Setup Automático</h4>
+                                <p>Configuração automática do ambiente MongoDB e collections</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="overview-remote" class="tab-content">
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h4>Servidor 192.168.22.111</h4>
+                                <p>Configuração prática para conexão com servidor remoto específico</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Autenticação Segura</h4>
+                                <p>Suporte completo a credenciais, SSL/TLS e validação de conexão</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Configuração Flexível</h4>
+                                <p>Gerenciamento via arquivo .env ou configuração direta no código</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="overview-docker" class="tab-content">
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h4>Ambiente Isolado</h4>
+                                <p>MongoDB e Mongo Express executando em containers Docker</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Deploy Rápido</h4>
+                                <p>Ambiente completo funcionando com um único comando</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Desenvolvimento</h4>
+                                <p>Configuração ideal para testes e desenvolvimento local</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dados -->
+            <section id="dados" class="section">
+                <div class="content-card">
+                    <h2>Estrutura dos Dados</h2>
+
+                    <h3>DataFrame Carros</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Carro</th>
+                                <th>Cor</th>
+                                <th>Montadora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Onix</td><td>Prata</td><td>Chevrolet</td></tr>
+                            <tr><td>Polo</td><td>Branco</td><td>Volkswagen</td></tr>
+                            <tr><td>Sandero</td><td>Prata</td><td>Renault</td></tr>
+                            <tr><td>Fiesta</td><td>Vermelho</td><td>Ford</td></tr>
+                            <tr><td>City</td><td>Preto</td><td>Honda</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>DataFrame Montadoras</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Montadora</th>
+                                <th>País</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Chevrolet</td><td>EUA</td></tr>
+                            <tr><td>Volkswagen</td><td>Alemanha</td></tr>
+                            <tr><td>Renault</td><td>França</td></tr>
+                            <tr><td>Ford</td><td>EUA</td></tr>
+                            <tr><td>Honda</td><td>Japão</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert alert-info">
+                        <strong>Relacionamento:</strong> As collections são relacionadas através do campo <strong>montadora</strong> para criar a agregação final agrupada por país.
+                    </div>
+
+                    <h3>Implementação Python</h3>
+                    <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>import pandas as pd
+
+# DataFrame Carros
+carros_data = {
+    'carro': ['Onix', 'Polo', 'Sandero', 'Fiesta', 'City'],
+    'cor': ['Prata', 'Branco', 'Prata', 'Vermelho', 'Preto'],
+    'montadora': ['Chevrolet', 'Volkswagen', 'Renault', 'Ford', 'Honda']
+}
+df_carros = pd.DataFrame(carros_data)
+
+# DataFrame Montadoras  
+montadoras_data = {
+    'montadora': ['Chevrolet', 'Volkswagen', 'Renault', 'Ford', 'Honda'],
+    'pais': ['EUA', 'Alemanha', 'França', 'EUA', 'Japão']
+}
+df_montadoras = pd.DataFrame(montadoras_data)</pre>
+                </div>
+            </section>
+
+            <!-- Instalação Local -->
+            <section id="local" class="section">
+                <div class="content-card">
+                    <h2>Instalação Local</h2>
+
+                    <div class="tab-navigation">
+                        <button class="tab-button active" onclick="showTab('local-windows')">Windows</button>
+                        <button class="tab-button" onclick="showTab('local-linux')">Linux</button>
+                        <button class="tab-button" onclick="showTab('local-docker')">Docker</button>
+                    </div>
+
+                    <div id="local-windows" class="tab-content active">
+                        <h3>Configuração Windows</h3>
+                        
+                        <div class="step-item completed">
+                            <div class="step-number">1</div>
+                            <div class="step-title">Instalar MongoDB</div>
+                            <p><strong>Opção A - Chocolatey:</strong></p>
+                            <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>choco install mongodb</pre>
+                            
+                            <p><strong>Opção B - Download Manual:</strong></p>
+                            <p>Baixar em: <a href="https://www.mongodb.com/try/download/community" target="_blank">MongoDB Community Server</a></p>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Configurar Ambiente Python</div>
+                            <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>cd Case-Engenheiro-dados
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt</pre>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">3</div>
+                            <div class="step-title">Iniciar Serviço MongoDB</div>
+                            <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>net start MongoDB</pre>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">4</div>
+                            <div class="step-title">Executar Script</div>
+                            <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>python scripts/main_local.py</pre>
+                        </div>
+                    </div>
+
+                    <div id="local-linux" class="tab-content">
+                        <h3>Configuração Linux</h3>
+                        
+                        <div class="step-item completed">
+                            <div class="step-number">1</div>
+                            <div class="step-title">Instalar MongoDB</div>
+                            <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button># Ubuntu/Debian
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+
+# Iniciar serviço
+sudo systemctl start mongod
+sudo systemctl enable mongod</pre>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Configurar Python</div>
+                            <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt</pre>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">3</div>
+                            <div class="step-title">Executar</div>
+                            <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>python scripts/main_local.py</pre>
+                        </div>
+                    </div>
+
+                    <div id="local-docker" class="tab-content">
+                        <h3>Ambiente Docker</h3>
+                        
+                        <div class="alert alert-success">
+                            <strong>Vantagem:</strong> Não requer instalação local do MongoDB
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">1</div>
+                            <div class="step-title">Subir Containers</div>
+                            <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>docker-compose -f docker/docker-compose.yml up -d</pre>
+                        </div>
+
+                        <div class="step-item completed">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Executar Script</div>
+                            <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>python scripts/main_local.py</pre>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <strong>Interface Web:</strong> Mongo Express disponível em <code>http://localhost:8081</code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conexão Remota -->
+            <section id="remoto" class="section">
+                <div class="content-card">
+                    <h2>Conexão Remota</h2>
+                    
+                    <div class="alert alert-warning">
+                        <strong>Configuração para servidor:</strong> 192.168.22.111
+                    </div>
+
+                    <h3>Configuração do Servidor</h3>
+                    <div class="step-item completed">
+                        <div class="step-number">1</div>
+                        <div class="step-title">MongoDB no Servidor</div>
+                        <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button># Editar configuração
+sudo nano /etc/mongod.conf
+
+# Permitir conexões externas
+net:
+  port: 27017
+  bindIp: 0.0.0.0
+
+# Reiniciar serviço
+sudo systemctl restart mongod</pre>
+                    </div>
+
+                    <div class="step-item completed">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Configurar Firewall</div>
+                        <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button># Ubuntu
+sudo ufw allow 27017/tcp
+
+# CentOS
+sudo firewall-cmd --permanent --add-port=27017/tcp
+sudo firewall-cmd --reload</pre>
+                    </div>
+
+                    <h3>Configuração do Cliente</h3>
+                    <div class="step-item completed">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Arquivo .env</div>
+                        <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>MONGO_HOST=192.168.22.111
+MONGO_PORT=27017
+MONGO_DATABASE=dataops_challenge
+MONGO_USERNAME=usuario
+MONGO_PASSWORD=senha</pre>
+                    </div>
+
+                    <div class="step-item completed">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Executar Script Remoto</div>
+                        <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>python scripts/main_remote.py</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Execução -->
+            <section id="execucao" class="section">
+                <div class="content-card">
+                    <h2>Execução dos Scripts</h2>
+
+                    <h3>Script Local</h3>
+                    <div class="code-inline">python scripts/main_local.py</div>
+                    
+                    <h4>Funcionalidades do script local:</h4>
+                    <ul>
+                        <li>Conecta ao MongoDB local (localhost:27017)</li>
+                        <li>Cria database 'dataops_challenge' automaticamente</li>
+                        <li>Insere dados dos DataFrames nas collections</li>
+                        <li>Executa pipeline de agregação MongoDB</li>
+                        <li>Exporta resultados para arquivos JSON</li>
+                        <li>Fornece logs detalhados de cada operação</li>
+                    </ul>
+
+                    <h3>Script Remoto</h3>
+                    <div class="code-inline">python scripts/main_remote.py</div>
+                    
+                    <h4>Funcionalidades adicionais do script remoto:</h4>
+                    <ul>
+                        <li>Validação completa de credenciais</li>
+                        <li>Teste de conectividade de rede</li>
+                        <li>Relatório de status do servidor</li>
+                        <li>Suporte a conexões SSL/TLS</li>
+                        <li>Tratamento robusto de erros de rede</li>
+                    </ul>
+
+                    <h3>Arquivos Gerados</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>carros.json</h4>
+                            <p>Collection completa de carros exportada do MongoDB</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>montadoras.json</h4>
+                            <p>Collection de montadoras com dados de países</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>aggregation_result.json</h4>
+                            <p>Resultado final da agregação por país</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resultados -->
+            <section id="resultados" class="section">
+                <div class="content-card">
+                    <h2>Resultados da Agregação</h2>
+                    
+                    <div class="alert alert-success">
+                        <strong>Pipeline MongoDB:</strong> Relaciona carros com montadoras e agrupa o resultado por país de origem
+                    </div>
+
+                    <h3>Pipeline de Agregação</h3>
+                    <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button>db.carros.aggregate([
+  {
+    $lookup: {
+      from: "montadoras",
+      localField: "montadora", 
+      foreignField: "montadora",
+      as: "montadora_info"
+    }
+  },
+  {
+    $unwind: "$montadora_info"
+  },
+  {
+    $group: {
+      _id: "$montadora_info.pais",
+      carros: {
+        $push: {
+          carro: "$carro",
+          cor: "$cor",
+          montadora: "$montadora"
+        }
+      }
+    }
+  },
+  {
+    $sort: { _id: 1 }
+  }
+]);</pre>
+
+                    <h3>Resultado Final por País</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>País</th>
+                                <th>Quantidade</th>
+                                <th>Carros</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Alemanha</td>
+                                <td>1</td>
+                                <td>Polo (Volkswagen)</td>
+                            </tr>
+                            <tr>
+                                <td>EUA</td>
+                                <td>2</td>
+                                <td>Onix (Chevrolet), Fiesta (Ford)</td>
+                            </tr>
+                            <tr>
+                                <td>França</td>
+                                <td>1</td>
+                                <td>Sandero (Renault)</td>
+                            </tr>
+                            <tr>
+                                <td>Japão</td>
+                                <td>1</td>
+                                <td>City (Honda)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert alert-info">
+                        <strong>Análise:</strong> Os Estados Unidos lideram com 2 carros de montadoras diferentes (Chevrolet e Ford)
+                    </div>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting" class="section">
+                <div class="content-card">
+                    <h2>Resolução de Problemas</h2>
+
+                    <div class="tab-navigation">
+                        <button class="tab-button active" onclick="showTab('trouble-mongodb')">MongoDB</button>
+                        <button class="tab-button" onclick="showTab('trouble-python')">Python</button>
+                        <button class="tab-button" onclick="showTab('trouble-network')">Rede</button>
+                    </div>
+
+                    <div id="trouble-mongodb" class="tab-content active">
+                        <h3>Problemas com MongoDB</h3>
+                        
+                        <div class="alert alert-danger">
+                            <strong>Erro comum:</strong> "MongoDB service failed to start"
+                        </div>
+                        
+                        <h4>Solução Windows:</h4>
+                        <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button># Verificar logs
+Get-Content "C:\data\log\mongodb.log" -Tail 20
+
+# Reiniciar serviço
+net stop MongoDB
+net start MongoDB</pre>
+
+                        <h4>Solução Linux:</h4>
+                        <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button># Verificar status
+sudo systemctl status mongod
+
+# Reiniciar serviço
+sudo systemctl restart mongod
+
+# Visualizar logs
+sudo journalctl -u mongod -f</pre>
+                    </div>
+
+                    <div id="trouble-python" class="tab-content">
+                        <h3>Problemas com Python</h3>
+                        
+                        <div class="alert alert-danger">
+                            <strong>Erro comum:</strong> "No module named 'pandas'"
+                        </div>
+                        
+                        <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button># Ativar ambiente virtual
+# Windows
+.venv\Scripts\Activate.ps1
+
+# Linux/Mac  
+source .venv/bin/activate
+
+# Instalar dependências
+pip install -r requirements.txt</pre>
+
+                        <div class="alert alert-info">
+                            <strong>Teste rápido:</strong> <code>python -c "import pandas; print('Pandas funcionando!')"</code>
+                        </div>
+                    </div>
+
+                    <div id="trouble-network" class="tab-content">
+                        <h3>Problemas de Conectividade</h3>
+                        
+                        <div class="alert alert-danger">
+                            <strong>Erro comum:</strong> "Connection timeout" (servidor remoto)
+                        </div>
+                        
+                        <h4>Testar conectividade:</h4>
+                        <pre><button class="copy-button" onclick="copyCode(this)">Copiar</button># Ping para o servidor
+ping 192.168.22.111
+
+# Testar porta específica
+telnet 192.168.22.111 27017
+
+# Verificar firewall local
+sudo ufw status</pre>
+
+                        <div class="alert alert-success">
+                            <strong>Dica:</strong> Use MongoDB Compass para testar a conexão de forma visual
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p><strong>Desafio DataOps</strong> - Implementação MongoDB & Python</p>
+            <p>Desenvolvido para instalação local e conexão remota | 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        // Navegação entre seções
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[href="#${sectionId}"]`).classList.add('active');
+        }
+
+        // Event listeners para navegação
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('href').substring(1);
+                showSection(sectionId);
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Navegação por tabs
+        function showTab(tabId) {
+            const section = document.querySelector(`#${tabId}`).closest('.section');
+            
+            section.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            
+            section.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            const activeButton = Array.from(section.querySelectorAll('.tab-button')).find(
+                button => button.getAttribute('onclick').includes(tabId)
+            );
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        }
+
+        // Copiar código
+        function copyCode(button) {
+            const pre = button.parentElement;
+            const code = pre.textContent.replace('Copiar', '').trim();
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copiado!';
+                button.style.background = '#27ae60';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#3498db';
+                }, 2000);
+            });
+        }
+
+        // Animação da barra de progresso
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('main-progress').style.width = '100%';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

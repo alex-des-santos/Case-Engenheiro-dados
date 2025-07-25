@@ -1,0 +1,100 @@
+# Arquivo .gitignore para o projeto DataOps
+
+# === ARQUIVOS DE CONFIGURAÇÃO SENSÍVEIS ===
+.env
+*.env
+.env.local
+.env.production
+config/secrets.py
+secrets/
+
+# === AMBIENTE VIRTUAL PYTHON ===
+.venv/
+venv/
+env/
+ENV/
+
+# === CACHE PYTHON ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# === DISTRIBUIÇÃO / PACKAGING ===
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# === PYTEST ===
+.pytest_cache/
+.coverage
+htmlcov/
+
+# === JUPYTER NOTEBOOK ===
+.ipynb_checkpoints
+
+# === VSCODE ===
+.vscode/
+*.code-workspace
+
+# === PYCHARM ===
+.idea/
+
+# === SISTEMA OPERACIONAL ===
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# === LOGS ===
+*.log
+logs/
+
+# === DADOS TEMPORÁRIOS ===
+temp/
+tmp/
+*.tmp
+*.temp
+
+# === BACKUPS ===
+*.bak
+*.backup
+
+# === CERTIFICADOS E CHAVES ===
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# === DUMPS DE DATABASE ===
+*.dump
+*.sql.gz
+mongodb/dumps/
+
+# === ARQUIVOS DE DADOS SENSÍVEIS ===
+data/sensitive/
+exports/production/
+
+# === NODE.js (se usar ferramentas JS) ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
