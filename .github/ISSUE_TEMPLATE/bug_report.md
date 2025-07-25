@@ -6,8 +6,8 @@ labels: bug
 assignees: ''
 ---
 
-## DescriÁ„o do Bug
-DescriÁ„o clara e concisa do problema encontrado.
+## Descri√ß√£o do Bug
+Descri√ß√£o clara e concisa do problema encontrado.
 
 ## Para Reproduzir
 Steps para reproduzir o comportamento:
@@ -16,13 +16,13 @@ Steps para reproduzir o comportamento:
 3. Ver erro
 
 ## Comportamento Esperado
-DescriÁ„o clara do que deveria acontecer.
+Descri√ß√£o clara do que deveria acontecer.
 
 ## Comportamento Atual
 O que realmente acontece.
 
 ## Screenshots/Logs
-Se aplic·vel, adicione screenshots ou logs de erro.
+Se aplic√°vel, adicione screenshots ou logs de erro.
 
 ```
 Cole aqui os logs de erro
@@ -32,11 +32,11 @@ Cole aqui os logs de erro
 - OS: [ex: Windows 10, Ubuntu 20.04]
 - Python Version: [ex: 3.9.0]
 - MongoDB Version: [ex: 7.0.0]
-- Tipo de instalaÁ„o: [Local/Docker/Remoto]
+- Tipo de instala√ß√£o: [Local/Docker/Remoto]
 
-## ConfiguraÁ„o
-- Arquivo de configuraÁ„o usado: [local/remoto]
-- Vari·veis de ambiente relevantes: [sem dados sensÌveis]
+## Configura√ß√£o
+- Arquivo de configura√ß√£o usado: [local/remoto]
+- Vari√°veis de ambiente relevantes: [sem dados sens√≠veis]
 
-## InformaÁıes Adicionais
-Qualquer outra informaÁ„o que possa ajudar a resolver o problema.
+## Informa√ß√µes Adicionais
+Qualquer outra informa√ß√£o que possa ajudar a resolver o problema.

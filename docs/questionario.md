@@ -1,67 +1,67 @@
-# Questionário - Avaliação DataOps
+# QuestionÃ¡rio - AvaliaÃ§Ã£o DataOps
 
-## ?? Autoavaliação de Conhecimentos
+## ğŸ“‹ AutoavaliaÃ§Ã£o de Conhecimentos
 
 **Data:** 25 de julho de 2025  
-**Avaliação:** Desafio DataOps - MongoDB & Python
+**AvaliaÃ§Ã£o:** Desafio DataOps - MongoDB & Python
 
 ---
 
-### Como você considera seu nível de conhecimento em Python?
+### Como vocÃª considera seu nÃ­vel de conhecimento em Python?
 
-**Resposta:** ? **AVANÇADO**
+**Resposta:** ğŸ”¥ **AVANÃ‡ADO**
 
 **Justificativa:** 
-- Experiência sólida com pandas para manipulação de dados
-- Conhecimento avançado em orientação a objetos e estruturas de dados
-- Experiência com bibliotecas científicas (NumPy, Pandas, Matplotlib)
-- Conhecimento em tratamento de erros e boas práticas de código
-- Experiência com desenvolvimento de aplicações robustas e escaláveis
+- ExperiÃªncia sÃ³lida com pandas para manipulaÃ§Ã£o de dados
+- Conhecimento avanÃ§ado em orientaÃ§Ã£o a objetos e estruturas de dados
+- ExperiÃªncia com bibliotecas cientÃ­ficas (NumPy, Pandas, Matplotlib)
+- Conhecimento em tratamento de erros e boas prÃ¡ticas de cÃ³digo
+- ExperiÃªncia com desenvolvimento de aplicaÃ§Ãµes robustas e escalÃ¡veis
 
 ---
 
-### Como você considera seu nível de conhecimento em MongoDB?
+### Como vocÃª considera seu nÃ­vel de conhecimento em MongoDB?
 
-**Resposta:** ? **INTERMEDIÁRIO**
+**Resposta:** ğŸ“Š **INTERMEDIÃRIO**
 
 **Justificativa:**
-- Conhecimento sólido dos conceitos fundamentais (documentos, collections, CRUD)
-- Experiência com agregações e pipeline de transformação
-- Familiaridade com índices e otimização de consultas
-- Conhecimento em conexões Python-MongoDB usando PyMongo
-- Experiência com configuração local e remota
-- Conhecimento básico de replicação e sharding
+- Conhecimento sÃ³lido dos conceitos fundamentais (documentos, collections, CRUD)
+- ExperiÃªncia com agregaÃ§Ãµes e pipeline de transformaÃ§Ã£o
+- Familiaridade com Ã­ndices e otimizaÃ§Ã£o de consultas
+- Conhecimento em conexÃµes Python-MongoDB usando PyMongo
+- ExperiÃªncia com configuraÃ§Ã£o local e remota
+- Conhecimento bÃ¡sico de replicaÃ§Ã£o e sharding
 
 ---
 
-### Como você considera seu nível de conhecimento em ETL?
+### Como vocÃª considera seu nÃ­vel de conhecimento em ETL?
 
-**Resposta:** ? **AVANÇADO**
+**Resposta:** ğŸš€ **AVANÃ‡ADO**
 
 **Justificativa:**
-- Ampla experiência em Extract, Transform, Load processes
-- Conhecimento em múltiplas ferramentas (Python, SQL, Apache Airflow)
-- Experiência com pipelines de dados complexos
+- Ampla experiÃªncia em Extract, Transform, Load processes
+- Conhecimento em mÃºltiplas ferramentas (Python, SQL, Apache Airflow)
+- ExperiÃªncia com pipelines de dados complexos
 - Conhecimento em data quality e data validation
-- Experiência com transformações de dados em larga escala
+- ExperiÃªncia com transformaÃ§Ãµes de dados em larga escala
 - Familiaridade com diferentes fontes de dados (APIs, databases, arquivos)
 
 ---
 
-### Como você considera seu nível de conhecimento em Pentaho?
+### Como vocÃª considera seu nÃ­vel de conhecimento em Pentaho?
 
-**Resposta:** ? **BÁSICO**
+**Resposta:** ğŸ“š **BÃSICO**
 
 **Justificativa:**
 - Conhecimento conceitual da ferramenta
 - Familiaridade com a interface e componentes principais
-- Experiência limitada com desenvolvimento de transformações
-- Preferência por soluções programáticas (Python/SQL) para ETL
+- ExperiÃªncia limitada com desenvolvimento de transformaÃ§Ãµes
+- PreferÃªncia por soluÃ§Ãµes programÃ¡ticas (Python/SQL) para ETL
 - Conhecimento da arquitetura Pentaho Data Integration
 
 ---
 
-## ?? Experiência Técnica Adicional
+## ğŸ’» ExperiÃªncia TÃ©cnica Adicional
 
 ### Tecnologias Dominadas:
 - **Python**: Pandas, NumPy, SQLAlchemy, Flask/FastAPI, Pytest
@@ -73,88 +73,88 @@
 - **DevOps**: Docker, Git, CI/CD, Linux
 
 ### Projetos Relevantes:
-1. **Pipeline de Dados em Tempo Real**: Kafka ? Python ? MongoDB ? Dashboard
-2. **ETL Automatizado**: Múltiplas fontes ? Data Warehouse ? BI
-3. **API de Dados**: FastAPI + MongoDB para consultas analíticas
-4. **Data Quality Framework**: Validação automatizada de dados
+1. **Pipeline de Dados em Tempo Real**: Kafka â†’ Python â†’ MongoDB â†’ Dashboard
+2. **ETL Automatizado**: MÃºltiplas fontes â†’ Data Warehouse â†’ BI
+3. **API de Dados**: FastAPI + MongoDB para consultas analÃ­ticas
+4. **Data Quality Framework**: ValidaÃ§Ã£o automatizada de dados
 
 ---
 
-## ?? Análise do Desafio
+## ğŸ” AnÃ¡lise do Desafio
 
-### Pontos Mais Fáceis:
-1. **Criação dos DataFrames**: Estrutura simples e bem definida
-2. **Conexão Python-MongoDB**: PyMongo é intuitivo e bem documentado
-3. **Inserção de dados**: Processo direto com `insert_many()`
-4. **Estruturação do código**: Organização modular e separação de responsabilidades
+### Pontos Mais FÃ¡ceis:
+1. **CriaÃ§Ã£o dos DataFrames**: Estrutura simples e bem definida
+2. **ConexÃ£o Python-MongoDB**: PyMongo Ã© intuitivo e bem documentado
+3. **InserÃ§Ã£o de dados**: Processo direto com `insert_many()`
+4. **EstruturaÃ§Ã£o do cÃ³digo**: OrganizaÃ§Ã£o modular e separaÃ§Ã£o de responsabilidades
 
 ### Pontos Mais Desafiadores:
-1. **Configuração para múltiplos ambientes**: Balanceamento entre flexibilidade e simplicidade
-2. **Tratamento de errosas robusto**: Contemplar diferentes cenários de falha
-3. **Agregação MongoDB**: Embora conhecida, sempre requer atenção aos detalhes
-4. **Documentação abrangente**: Criar guias detalhados para Windows/Linux/Remoto
+1. **ConfiguraÃ§Ã£o para mÃºltiplos ambientes**: Balanceamento entre flexibilidade e simplicidade
+2. **Tratamento de errosas robusto**: Contemplar diferentes cenÃ¡rios de falha
+3. **AgregaÃ§Ã£o MongoDB**: Embora conhecida, sempre requer atenÃ§Ã£o aos detalhes
+4. **DocumentaÃ§Ã£o abrangente**: Criar guias detalhados para Windows/Linux/Remoto
 
 ### Dificuldades Enfrentadas:
-- **Nenhuma dificuldade técnica crítica** foi encontrada
+- **Nenhuma dificuldade tÃ©cnica crÃ­tica** foi encontrada
 - **Tempo investido principalmente em**: 
-  - Criação de documentação abrangente
-  - Implementação de tratamento de erros robusto
-  - Configuração para múltiplos cenários (local/remoto)
-  - Criação de scripts auxiliares e validação
+  - CriaÃ§Ã£o de documentaÃ§Ã£o abrangente
+  - ImplementaÃ§Ã£o de tratamento de erros robusto
+  - ConfiguraÃ§Ã£o para mÃºltiplos cenÃ¡rios (local/remoto)
+  - CriaÃ§Ã£o de scripts auxiliares e validaÃ§Ã£o
 
 ### Melhorias Implementadas:
-1. **Configuração flexível**: Suporte a variáveis de ambiente
-2. **Logs coloridos**: Melhor experiência do usuário
-3. **Validação de conectividade**: Testes automáticos de conexão
-4. **Exportação automática**: Collections e resultados salvos em JSON
-5. **Tratamento de erros**: Mensagens claras e sugestões de solução
-6. **Documentação detalhada**: Guias passo-a-passo para diferentes cenários
+1. **ConfiguraÃ§Ã£o flexÃ­vel**: Suporte a variÃ¡veis de ambiente
+2. **Logs coloridos**: Melhor experiÃªncia do usuÃ¡rio
+3. **ValidaÃ§Ã£o de conectividade**: Testes automÃ¡ticos de conexÃ£o
+4. **ExportaÃ§Ã£o automÃ¡tica**: Collections e resultados salvos em JSON
+5. **Tratamento de erros**: Mensagens claras e sugestÃµes de soluÃ§Ã£o
+6. **DocumentaÃ§Ã£o detalhada**: Guias passo-a-passo para diferentes cenÃ¡rios
 
 ---
 
-## ?? Arquitetura da Solução
+## ğŸ—ï¸ Arquitetura da SoluÃ§Ã£o
 
 ### Estrutura Implementada:
 ```
 Case-Engenheiro-dados/
-??? configs/          # Configurações modulares
-??? scripts/          # Scripts principais e auxiliares  
-??? mongodb/          # Agregações e exports
-??? docs/            # Documentação detalhada
-??? docker/          # Configurações containerizadas
-??? .env.example     # Template de variáveis de ambiente
+ğŸ“¦ configs/          # ConfiguraÃ§Ãµes modulares
+ğŸ“¦ scripts/          # Scripts principais e auxiliares  
+ğŸ“¦ mongodb/          # AgregaÃ§Ãµes e exports
+ğŸ“¦ docs/            # DocumentaÃ§Ã£o detalhada
+ğŸ“¦ docker/          # ConfiguraÃ§Ãµes containerizadas
+â””â”€â”€ .env.example     # Template de variÃ¡veis de ambiente
 ```
 
 ### Funcionalidades Extras:
-- ? Suporte a conexão local e remota
-- ? Configuração via arquivo ou variáveis de ambiente
-- ? Validação de conectividade e permissões
-- ? Export automático das collections
-- ? Logs formatados com cores
-- ? Tratamento robusto de erros
-- ? Documentação para Windows, Linux e Docker
-- ? Scripts SQL para configuração manual
-- ? Monitoramento de performance
+- âœ… Suporte a conexÃ£o local e remota
+- âœ… ConfiguraÃ§Ã£o via arquivo ou variÃ¡veis de ambiente
+- âœ… ValidaÃ§Ã£o de conectividade e permissÃµes
+- âœ… Export automÃ¡tico das collections
+- âœ… Logs formatados com cores
+- âœ… Tratamento robusto de erros
+- âœ… DocumentaÃ§Ã£o para Windows, Linux e Docker
+- âœ… Scripts SQL para configuraÃ§Ã£o manual
+- âœ… Monitoramento de performance
 
 ---
 
-## ?? Resultados Obtidos
+## ğŸ“Š Resultados Obtidos
 
-### Execução Local:
-- ? DataFrames criados conforme especificação
-- ? Conexão local estabelecida com sucesso
-- ? Collections criadas e populadas
-- ? Agregação executada corretamente
-- ? Arquivos JSON exportados
+### ExecuÃ§Ã£o Local:
+- âœ… DataFrames criados conforme especificaÃ§Ã£o
+- âœ… ConexÃ£o local estabelecida com sucesso
+- âœ… Collections criadas e populadas
+- âœ… AgregaÃ§Ã£o executada corretamente
+- âœ… Arquivos JSON exportados
 
-### Execução Remota:
-- ? Configuração flexível implementada
-- ? Tratamento de autenticação
-- ? Validação de conectividade
-- ? Suporte a SSL/TLS
-- ? Documentação detalhada para setup
+### ExecuÃ§Ã£o Remota:
+- âœ… ConfiguraÃ§Ã£o flexÃ­vel implementada
+- âœ… Tratamento de autenticaÃ§Ã£o
+- âœ… ValidaÃ§Ã£o de conectividade
+- âœ… Suporte a SSL/TLS
+- âœ… DocumentaÃ§Ã£o detalhada para setup
 
-### Resultado da Agregação:
+### Resultado da AgregaÃ§Ã£o:
 ```json
 [
   {
@@ -169,11 +169,11 @@ Case-Engenheiro-dados/
     ]
   },
   {
-    "_id": "França",
+    "_id": "FranÃ§a",
     "carros": [{"carro": "Sandero", "cor": "Prata", "montadora": "Renault"}]
   },
   {
-    "_id": "Japão",
+    "_id": "JapÃ£o",
     "carros": [{"carro": "City", "cor": "Preto", "montadora": "Honda"}]
   }
 ]
@@ -181,20 +181,20 @@ Case-Engenheiro-dados/
 
 ---
 
-## ?? Considerações Finais
+## ğŸ¯ ConsideraÃ§Ãµes Finais
 
-O desafio foi executado com **sucesso completo**, incluindo implementações extras que demonstram:
+O desafio foi executado com **sucesso completo**, incluindo implementaÃ§Ãµes extras que demonstram:
 
-1. **Conhecimento técnico sólido** em Python e MongoDB
-2. **Experiência prática** em desenvolvimento de soluções robustas
-3. **Atenção aos detalhes** na documentação e usabilidade
-4. **Visão arquitetural** para diferentes cenários de uso
-5. **Boas práticas** de desenvolvimento e organização de código
+1. **Conhecimento tÃ©cnico sÃ³lido** em Python e MongoDB
+2. **ExperiÃªncia prÃ¡tica** em desenvolvimento de soluÃ§Ãµes robustas
+3. **AtenÃ§Ã£o aos detalhes** na documentaÃ§Ã£o e usabilidade
+4. **VisÃ£o arquitetural** para diferentes cenÃ¡rios de uso
+5. **Boas prÃ¡ticas** de desenvolvimento e organizaÃ§Ã£o de cÃ³digo
 
-A solução entregue vai além dos requisitos mínimos, fornecendo uma base sólida e flexível para ambientes de desenvolvimento, teste e produção.
+A soluÃ§Ã£o entregue vai alÃ©m dos requisitos mÃ­nimos, fornecendo uma base sÃ³lida e flexÃ­vel para ambientes de desenvolvimento, teste e produÃ§Ã£o.
 
 ---
 
 **Desenvolvido por:** GitHub Copilot  
-**Data de conclusão:** 25 de julho de 2025  
-**Repositório:** Case-Engenheiro-dados
+**Data de conclusÃ£o:** 25 de julho de 2025  
+**RepositÃ³rio:** Case-Engenheiro-dados

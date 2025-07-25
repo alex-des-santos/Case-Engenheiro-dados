@@ -7,23 +7,23 @@ assignees: ''
 ---
 
 ## Problema ou Necessidade
-Descrição clara do problema que esta funcionalidade resolveria.
+DescriÃ§Ã£o clara do problema que esta funcionalidade resolveria.
 
-## Solução Proposta
-Descrição clara da funcionalidade desejada.
+## SoluÃ§Ã£o Proposta
+DescriÃ§Ã£o clara da funcionalidade desejada.
 
 ## Alternativas Consideradas
-Outras soluções ou funcionalidades que você considerou.
+Outras soluÃ§Ãµes ou funcionalidades que vocÃª considerou.
 
-## Benefícios
+## BenefÃ­cios
 - Como isso beneficiaria o projeto?
-- Quantos usuários seriam impactados?
+- Quantos usuÃ¡rios seriam impactados?
 
-## Implementação Sugerida
+## ImplementaÃ§Ã£o Sugerida
 Se tiver ideias sobre como implementar:
-- Módulos que precisariam ser alterados
-- Novas dependências necessárias
-- Impacto em configurações existentes
+- MÃ³dulos que precisariam ser alterados
+- Novas dependÃªncias necessÃ¡rias
+- Impacto em configuraÃ§Ãµes existentes
 
 ## Exemplos de Uso
 ```python
@@ -31,5 +31,5 @@ Se tiver ideias sobre como implementar:
 exemplo_de_codigo()
 ```
 
-## Informações Adicionais
-Contexto adicional, screenshots, links para referências, etc.
+## InformaÃ§Ãµes Adicionais
+Contexto adicional, screenshots, links para referÃªncias, etc.

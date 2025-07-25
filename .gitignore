@@ -1,6 +1,6 @@
 # Arquivo .gitignore para o projeto DataOps
 
-# === ARQUIVOS DE CONFIGURA��O SENS�VEIS ===
+# === ARQUIVOS DE CONFIGURAÇÃO SENSÍVEIS ===
 .env
 *.env
 .env.local
@@ -20,7 +20,7 @@ __pycache__/
 *$py.class
 *.so
 
-# === DISTRIBUI��O / PACKAGING ===
+# === DISTRIBUIÇÃO / PACKAGING ===
 .Python
 build/
 develop-eggs/
@@ -67,7 +67,7 @@ Thumbs.db
 *.log
 logs/
 
-# === DADOS TEMPOR�RIOS ===
+# === DADOS TEMPORÁRIOS ===
 temp/
 tmp/
 *.tmp
@@ -89,7 +89,7 @@ tmp/
 *.sql.gz
 mongodb/dumps/
 
-# === ARQUIVOS DE DADOS SENS�VEIS ===
+# === ARQUIVOS DE DADOS SENSÍVEIS ===
 data/sensitive/
 exports/production/
 

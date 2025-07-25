@@ -7,17 +7,17 @@ assignees: ''
 ---
 
 ## Pergunta
-Descreva sua pergunta de forma clara e específica.
+Descreva sua pergunta de forma clara e especÃ­fica.
 
 ## Contexto
-- O que você está tentando fazer?
-- Que documentação você já consultou?
-- Que tentativas já foram feitas?
+- O que vocÃª estÃ¡ tentando fazer?
+- Que documentaÃ§Ã£o vocÃª jÃ¡ consultou?
+- Que tentativas jÃ¡ foram feitas?
 
 ## Ambiente (se relevante)
 - OS: [ex: Windows 10, Ubuntu 20.04]
 - Python Version: [ex: 3.9.0]
-- Tipo de instalação: [Local/Docker/Remoto]
+- Tipo de instalaÃ§Ã£o: [Local/Docker/Remoto]
 
-## Informações Adicionais
+## InformaÃ§Ãµes Adicionais
 Qualquer contexto adicional que possa ajudar a responder sua pergunta.

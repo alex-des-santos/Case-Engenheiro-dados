@@ -1,12 +1,12 @@
 # Contribuindo para o Desafio DataOps
 
-Obrigado pelo interesse em contribuir com este projeto! Este documento fornece diretrizes para contribuições.
+Obrigado pelo interesse em contribuir com este projeto! Este documento fornece diretrizes para contribuiÃ§Ãµes.
 
 ## Como Contribuir
 
 ### 1. Fork do Projeto
 ```bash
-# Faça um fork no GitHub e clone localmente
+# FaÃ§a um fork no GitHub e clone localmente
 git clone https://github.com/SEU-USUARIO/Case-Engenheiro-dados.git
 cd Case-Engenheiro-dados
 ```
@@ -18,7 +18,7 @@ python -m venv .venv
 source .venv/bin/activate  # Linux/Mac
 # ou .venv\Scripts\Activate.ps1  # Windows
 
-# Instalar dependências
+# Instalar dependÃªncias
 pip install -r requirements.txt
 
 # Instalar ferramentas de desenvolvimento
@@ -32,17 +32,17 @@ git checkout -b feature/nova-funcionalidade
 git checkout -b fix/correcao-bug
 ```
 
-### 4. Fazer Alterações
+### 4. Fazer AlteraÃ§Ãµes
 
-#### Padrões de Código
+#### PadrÃµes de CÃ³digo
 - **Python**: Seguir PEP 8
-- **Formatação**: Usar `black` para formatação automática
+- **FormataÃ§Ã£o**: Usar `black` para formataÃ§Ã£o automÃ¡tica
 - **Imports**: Organizar com `isort`
 - **Lint**: Passar no `flake8`
 
 #### Executar Ferramentas de Qualidade
 ```bash
-# Formatação automática
+# FormataÃ§Ã£o automÃ¡tica
 black scripts/ configs/
 
 # Organizar imports
@@ -56,10 +56,10 @@ flake8 scripts/ configs/
 
 #### Executar Testes Existentes
 ```bash
-# Teste de dependências
+# Teste de dependÃªncias
 python test_dependencies.py
 
-# Teste básico
+# Teste bÃ¡sico
 python simple_test.py
 
 # Teste completo (precisa do MongoDB rodando)
@@ -67,137 +67,137 @@ python scripts/main_local.py
 ```
 
 #### Adicionar Novos Testes
-- Testes unitários para novas funções
-- Testes de integração quando aplicável
-- Documentar casos de teste específicos
+- Testes unitÃ¡rios para novas funÃ§Ãµes
+- Testes de integraÃ§Ã£o quando aplicÃ¡vel
+- Documentar casos de teste especÃ­ficos
 
-### 6. Documentação
+### 6. DocumentaÃ§Ã£o
 
-#### Atualizar Documentação
-- Atualizar README.md se necessário
+#### Atualizar DocumentaÃ§Ã£o
+- Atualizar README.md se necessÃ¡rio
 - Documentar novas funcionalidades
-- Atualizar guia interativo (`docs/index.html`) se aplicável
+- Atualizar guia interativo (`docs/index.html`) se aplicÃ¡vel
 
-#### Padrões de Documentação
+#### PadrÃµes de DocumentaÃ§Ã£o
 - Docstrings em Python seguindo formato Google
-- Comentários claros no código
-- Exemplos de uso quando aplicável
+- ComentÃ¡rios claros no cÃ³digo
+- Exemplos de uso quando aplicÃ¡vel
 
 ### 7. Commit e Push
 
-#### Padrões de Commit
+#### PadrÃµes de Commit
 ```bash
-# Formato: tipo(escopo): descrição
-git commit -m "feat(scripts): adicionar validação de dados"
-git commit -m "fix(mongodb): corrigir conexão remota SSL"
-git commit -m "docs(readme): atualizar instruções de instalação"
+# Formato: tipo(escopo): descriÃ§Ã£o
+git commit -m "feat(scripts): adicionar validaÃ§Ã£o de dados"
+git commit -m "fix(mongodb): corrigir conexÃ£o remota SSL"
+git commit -m "docs(readme): atualizar instruÃ§Ãµes de instalaÃ§Ã£o"
 ```
 
 #### Tipos de Commit
 - `feat`: Nova funcionalidade
-- `fix`: Correção de bug
-- `docs`: Documentação
-- `style`: Formatação (sem mudança de código)
-- `refactor`: Refatoração de código
+- `fix`: CorreÃ§Ã£o de bug
+- `docs`: DocumentaÃ§Ã£o
+- `style`: FormataÃ§Ã£o (sem mudanÃ§a de cÃ³digo)
+- `refactor`: RefatoraÃ§Ã£o de cÃ³digo
 - `test`: Adicionar ou corrigir testes
-- `chore`: Tarefas de manutenção
+- `chore`: Tarefas de manutenÃ§Ã£o
 
 ### 8. Pull Request
 
 #### Antes de Abrir PR
-- [ ] Código formatado com `black`
+- [ ] CÃ³digo formatado com `black`
 - [ ] Imports organizados com `isort`
 - [ ] Passou no `flake8`
-- [ ] Testes estão passando
-- [ ] Documentação atualizada
+- [ ] Testes estÃ£o passando
+- [ ] DocumentaÃ§Ã£o atualizada
 - [ ] Branch atualizada com `main`
 
 #### Template de PR
 ```markdown
-## Descrição
-Breve descrição das mudanças realizadas.
+## DescriÃ§Ã£o
+Breve descriÃ§Ã£o das mudanÃ§as realizadas.
 
-## Tipo de Mudança
+## Tipo de MudanÃ§a
 - [ ] Bug fix
 - [ ] Nova funcionalidade
 - [ ] Breaking change
-- [ ] Atualização de documentação
+- [ ] AtualizaÃ§Ã£o de documentaÃ§Ã£o
 
 ## Como Testar
-1. Passos para testar as mudanças
-2. Comandos específicos
-3. Cenários de teste
+1. Passos para testar as mudanÃ§as
+2. Comandos especÃ­ficos
+3. CenÃ¡rios de teste
 
 ## Checklist
-- [ ] Código segue padrões do projeto
+- [ ] CÃ³digo segue padrÃµes do projeto
 - [ ] Testes foram adicionados/atualizados
-- [ ] Documentação foi atualizada
-- [ ] Mudanças foram testadas localmente
+- [ ] DocumentaÃ§Ã£o foi atualizada
+- [ ] MudanÃ§as foram testadas localmente
 ```
 
 ## Estrutura do Projeto
 
-### Diretórios Principais
+### DiretÃ³rios Principais
 ```
-??? scripts/          # Scripts Python principais
-??? configs/          # Arquivos de configuração
-??? docs/            # Documentação e GitHub Pages
-??? mongodb/         # Scripts e exports MongoDB
-??? docker/          # Configurações Docker
-??? .github/         # Templates e workflows
+ğŸ“¦ scripts/          # Scripts Python principais
+ğŸ“¦ configs/          # Arquivos de configuraÃ§Ã£o
+ğŸ“¦ docs/            # DocumentaÃ§Ã£o e GitHub Pages
+ğŸ“¦ mongodb/         # Scripts e exports MongoDB
+ğŸ“¦ docker/          # ConfiguraÃ§Ãµes Docker
+ğŸ“¦ .github/         # Templates e workflows
 ```
 
 ### Arquivos Importantes
-- `requirements.txt`: Dependências Python
-- `test_dependencies.py`: Teste de dependências
-- `simple_test.py`: Testes básicos
-- `.env.example`: Template de configuração
+- `requirements.txt`: DependÃªncias Python
+- `test_dependencies.py`: Teste de dependÃªncias
+- `simple_test.py`: Testes bÃ¡sicos
+- `.env.example`: Template de configuraÃ§Ã£o
 
-## Diretrizes Específicas
+## Diretrizes EspecÃ­ficas
 
 ### Adicionando Nova Funcionalidade
-1. Criar função em módulo apropriado
-2. Adicionar testes unitários
-3. Documentar função com docstring
-4. Atualizar documentação relevante
-5. Considerar impacto em configurações
+1. Criar funÃ§Ã£o em mÃ³dulo apropriado
+2. Adicionar testes unitÃ¡rios
+3. Documentar funÃ§Ã£o com docstring
+4. Atualizar documentaÃ§Ã£o relevante
+5. Considerar impacto em configuraÃ§Ãµes
 
 ### Corrigindo Bugs
 1. Reproduzir bug localmente
-2. Escrever teste que falha (se aplicável)
-3. Implementar correção
+2. Escrever teste que falha (se aplicÃ¡vel)
+3. Implementar correÃ§Ã£o
 4. Verificar que teste agora passa
-5. Testar cenários relacionados
+5. Testar cenÃ¡rios relacionados
 
-### Melhorando Documentação
-1. Verificar clareza e precisão
-2. Adicionar exemplos práticos
-3. Atualizar guia interativo se necessário
-4. Considerar diferentes níveis de usuário
+### Melhorando DocumentaÃ§Ã£o
+1. Verificar clareza e precisÃ£o
+2. Adicionar exemplos prÃ¡ticos
+3. Atualizar guia interativo se necessÃ¡rio
+4. Considerar diferentes nÃ­veis de usuÃ¡rio
 
 ## Suporte
 
-### Dúvidas sobre Contribuição
+### DÃºvidas sobre ContribuiÃ§Ã£o
 - Abra uma issue com label "question"
-- Descreva claramente sua dúvida
+- Descreva claramente sua dÃºvida
 - Inclua contexto relevante
 
 ### Reportar Bugs
 - Use template de issue para bugs
 - Inclua steps para reproduzir
 - Especifique ambiente (OS, Python version, etc.)
-- Adicione logs de erro se disponível
+- Adicione logs de erro se disponÃ­vel
 
 ### Sugerir Melhorias
 - Use template de issue para features
 - Descreva o problema que resolve
-- Proponha solução detalhada
-- Considere impacto em usuários existentes
+- Proponha soluÃ§Ã£o detalhada
+- Considere impacto em usuÃ¡rios existentes
 
 ## Reconhecimento
 
-Contribuições são sempre bem-vindas! Contribuidores serão reconhecidos no README.md do projeto.
+ContribuiÃ§Ãµes sÃ£o sempre bem-vindas! Contribuidores serÃ£o reconhecidos no README.md do projeto.
 
 ---
 
-Obrigado por contribuir para tornar este projeto melhor! ??
+Obrigado por contribuir para tornar este projeto melhor! ğŸš€

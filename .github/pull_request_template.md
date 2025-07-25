@@ -1,15 +1,15 @@
-## Descrição
-Breve descrição das mudanças realizadas neste PR.
+## DescriÃ§Ã£o
+Breve descriÃ§Ã£o das mudanÃ§as realizadas neste PR.
 
-## Tipo de Mudança
-Marque com `x` as opções aplicáveis:
-- [ ] Bug fix (mudança que corrige um problema)
-- [ ] Nova funcionalidade (mudança que adiciona funcionalidade)
-- [ ] Breaking change (correção ou funcionalidade que causaria quebra na funcionalidade existente)
-- [ ] Atualização de documentação
+## Tipo de MudanÃ§a
+Marque com `x` as opÃ§Ãµes aplicÃ¡veis:
+- [ ] Bug fix (mudanÃ§a que corrige um problema)
+- [ ] Nova funcionalidade (mudanÃ§a que adiciona funcionalidade)
+- [ ] Breaking change (correÃ§Ã£o ou funcionalidade que causaria quebra na funcionalidade existente)
+- [ ] AtualizaÃ§Ã£o de documentaÃ§Ã£o
 
 ## Como Testar
-Descreva os testes que você executou para verificar suas mudanças:
+Descreva os testes que vocÃª executou para verificar suas mudanÃ§as:
 
 1. Teste A:
    ```bash
@@ -22,40 +22,40 @@ Descreva os testes que você executou para verificar suas mudanças:
    ```
 
 ## Impacto
-- [ ] Esta mudança requer atualização da documentação
-- [ ] Esta mudança requer migração ou atualização de configuração
-- [ ] Esta mudança afeta a compatibilidade com versões anteriores
+- [ ] Esta mudanÃ§a requer atualizaÃ§Ã£o da documentaÃ§Ã£o
+- [ ] Esta mudanÃ§a requer migraÃ§Ã£o ou atualizaÃ§Ã£o de configuraÃ§Ã£o
+- [ ] Esta mudanÃ§a afeta a compatibilidade com versÃµes anteriores
 
-## Screenshots (se aplicável)
-Cole aqui screenshots que demonstrem as mudanças.
+## Screenshots (se aplicÃ¡vel)
+Cole aqui screenshots que demonstrem as mudanÃ§as.
 
 ## Checklist
-Marque com `x` todos os itens aplicáveis:
+Marque com `x` todos os itens aplicÃ¡veis:
 
-### Código
-- [ ] Meu código segue as diretrizes de estilo deste projeto
-- [ ] Executei uma auto-revisão do meu código
-- [ ] Comentei meu código, particularmente em áreas difíceis de entender
-- [ ] Minhas mudanças não geram novos warnings
+### CÃ³digo
+- [ ] Meu cÃ³digo segue as diretrizes de estilo deste projeto
+- [ ] Executei uma auto-revisÃ£o do meu cÃ³digo
+- [ ] Comentei meu cÃ³digo, particularmente em Ã¡reas difÃ­ceis de entender
+- [ ] Minhas mudanÃ§as nÃ£o geram novos warnings
 
 ### Testes
-- [ ] Adicionei testes que comprovam que minha correção é efetiva ou que minha funcionalidade funciona
-- [ ] Testes unitários novos e existentes passam localmente com minhas mudanças
-- [ ] Testei em múltiplas configurações (local/docker/remoto) quando aplicável
+- [ ] Adicionei testes que comprovam que minha correÃ§Ã£o Ã© efetiva ou que minha funcionalidade funciona
+- [ ] Testes unitÃ¡rios novos e existentes passam localmente com minhas mudanÃ§as
+- [ ] Testei em mÃºltiplas configuraÃ§Ãµes (local/docker/remoto) quando aplicÃ¡vel
 
-### Documentação
-- [ ] Fiz mudanças correspondentes na documentação
-- [ ] Atualizei o guia interativo se necessário
-- [ ] Atualizei exemplos de uso se aplicável
+### DocumentaÃ§Ã£o
+- [ ] Fiz mudanÃ§as correspondentes na documentaÃ§Ã£o
+- [ ] Atualizei o guia interativo se necessÃ¡rio
+- [ ] Atualizei exemplos de uso se aplicÃ¡vel
 
 ### Qualidade
-- [ ] Executei `black` para formatação do código
+- [ ] Executei `black` para formataÃ§Ã£o do cÃ³digo
 - [ ] Executei `isort` para organizar imports
-- [ ] Código passou na verificação do `flake8`
+- [ ] CÃ³digo passou na verificaÃ§Ã£o do `flake8`
 
-## Informações Adicionais
+## InformaÃ§Ãµes Adicionais
 Adicione qualquer outro contexto sobre o PR aqui.
 
 ## Issues Relacionadas
-Resolve #(número_da_issue)
-Relacionado a #(número_da_issue)
+Resolve #(nÃºmero_da_issue)
+Relacionado a #(nÃºmero_da_issue)

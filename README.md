@@ -5,31 +5,31 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-7.0%2B-green)](https://mongodb.com)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **Implementação completa de pipeline de dados usando Python e MongoDB, com suporte para instalação local e conexão remota.**
+> **ImplementaÃ§Ã£o completa de pipeline de dados usando Python e MongoDB, com suporte para instalaÃ§Ã£o local e conexÃ£o remota.**
 
-## ?? Objetivo
+## ğŸ¯ Objetivo
 
 Desenvolver um sistema de processamento de dados que:
 - Cria DataFrames pandas com dados de carros e montadoras
 - Conecta ao MongoDB (local ou remoto)
-- Executa agregações relacionando collections
+- Executa agregaÃ§Ãµes relacionando collections
 - Exporta resultados em formato JSON
 
-## ?? Documentação Interativa
+## ğŸ“– DocumentaÃ§Ã£o Interativa
 
-**[?? Acesse o Guia Completo](https://SEU-USUARIO.github.io/Case-Engenheiro-dados/)**
+**[ğŸ“š Acesse o Guia Completo](https://SEU-USUARIO.github.io/Case-Engenheiro-dados/)**
 
-O guia interativo contém:
-- Instruções passo a passo para Windows, Linux e Docker
-- Configuração de conexão remota (servidor 192.168.22.111)
+O guia interativo contÃ©m:
+- InstruÃ§Ãµes passo a passo para Windows, Linux e Docker
+- ConfiguraÃ§Ã£o de conexÃ£o remota (servidor 192.168.22.111)
 - Troubleshooting detalhado
-- Visualização dos resultados
+- VisualizaÃ§Ã£o dos resultados
 
-## ?? Quick Start
+## ğŸš€ Quick Start
 
 ### Local (Windows)
 ```powershell
-# Clonar repositório
+# Clonar repositÃ³rio
 git clone https://github.com/SEU-USUARIO/Case-Engenheiro-dados.git
 cd Case-Engenheiro-dados
 
@@ -37,7 +37,7 @@ cd Case-Engenheiro-dados
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 
-# Instalar dependências  
+# Instalar dependÃªncias  
 pip install -r requirements.txt
 
 # Executar
@@ -46,7 +46,7 @@ python scripts/main_local.py
 
 ### Local (Linux)
 ```bash
-# Clonar repositório
+# Clonar repositÃ³rio
 git clone https://github.com/SEU-USUARIO/Case-Engenheiro-dados.git
 cd Case-Engenheiro-dados
 
@@ -54,7 +54,7 @@ cd Case-Engenheiro-dados
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Instalar dependências
+# Instalar dependÃªncias
 pip install -r requirements.txt
 
 # Executar
@@ -66,11 +66,11 @@ python scripts/main_local.py
 # Subir ambiente MongoDB
 docker-compose -f docker/docker-compose.yml up -d
 
-# Executar aplicação
+# Executar aplicaÃ§Ã£o
 python scripts/main_local.py
 ```
 
-### Conexão Remota
+### ConexÃ£o Remota
 ```bash
 # Configurar .env (copiar de .env.example)
 cp .env.example .env
@@ -84,7 +84,7 @@ cp .env.example .env
 python scripts/main_remote.py
 ```
 
-## ?? Estrutura dos Dados
+## ğŸ“Š Estrutura dos Dados
 
 ### DataFrame Carros
 | Carro | Cor | Montadora |
@@ -96,81 +96,81 @@ python scripts/main_remote.py
 | City    | Preto    | Honda       |
 
 ### DataFrame Montadoras
-| Montadora | País |
+| Montadora | PaÃ­s |
 |-----------|------|
 | Chevrolet | EUA |
 | Volkswagen | Alemanha |
-| Renault | França |
+| Renault | FranÃ§a |
 | Ford | EUA |
-| Honda | Japão |
+| Honda | JapÃ£o |
 
-## ?? Funcionalidades
+## âš¡ Funcionalidades
 
-- ? **DataFrames Pandas**: Estruturas de dados otimizadas
-- ? **MongoDB Local**: Conexão e configuração automática  
-- ? **MongoDB Remoto**: Suporte a servidores externos
-- ? **Agregação Pipeline**: Relacionamento entre collections
-- ? **Exportação JSON**: Resultados salvos em arquivos
-- ? **Docker Support**: Ambiente containerizado
-- ? **Multi-plataforma**: Windows, Linux, macOS
-- ? **Tratamento de Erros**: Logs detalhados e recovery
+- ğŸ“Š **DataFrames Pandas**: Estruturas de dados otimizadas
+- ğŸ—ƒï¸ **MongoDB Local**: ConexÃ£o e configuraÃ§Ã£o automÃ¡tica  
+- ğŸŒ **MongoDB Remoto**: Suporte a servidores externos
+- ğŸ”„ **AgregaÃ§Ã£o Pipeline**: Relacionamento entre collections
+- ğŸ“¤ **ExportaÃ§Ã£o JSON**: Resultados salvos em arquivos
+- ğŸ³ **Docker Support**: Ambiente containerizado
+- ğŸ–¥ï¸ **Multi-plataforma**: Windows, Linux, macOS
+- ğŸ›¡ï¸ **Tratamento de Erros**: Logs detalhados e recovery
 
-## ?? Estrutura do Projeto
+## ğŸ“ Estrutura do Projeto
 
 ```
-??? docs/                    # Documentação (GitHub Pages)
-?   ??? index.html          # Guia interativo
-??? scripts/                # Scripts Python
-?   ??? main_local.py       # Execução local
-?   ??? main_remote.py      # Execução remota  
-?   ??? data_processing.py  # Funções auxiliares
-??? configs/                # Configurações
-?   ??? local_config.py     # MongoDB local
-?   ??? remote_config.py    # MongoDB remoto
-??? mongodb/                # Scripts MongoDB
-?   ??? aggregation.js      # Pipeline de agregação
-??? docker/                 # Containers
-?   ??? docker-compose.yml  # MongoDB + Mongo Express
-??? requirements.txt        # Dependências Python
+ğŸ“¦ docs/                    # DocumentaÃ§Ã£o (GitHub Pages)
+â”‚   â””â”€â”€ index.html          # Guia interativo
+ğŸ“¦ scripts/                # Scripts Python
+â”‚   â”œâ”€â”€ main_local.py       # ExecuÃ§Ã£o local
+â”‚   â”œâ”€â”€ main_remote.py      # ExecuÃ§Ã£o remota  
+â”‚   â””â”€â”€ data_processing.py  # FunÃ§Ãµes auxiliares
+ğŸ“¦ configs/                # ConfiguraÃ§Ãµes
+â”‚   â”œâ”€â”€ local_config.py     # MongoDB local
+â”‚   â””â”€â”€ remote_config.py    # MongoDB remoto
+ğŸ“¦ mongodb/                # Scripts MongoDB
+â”‚   â””â”€â”€ aggregation.js      # Pipeline de agregaÃ§Ã£o
+ğŸ“¦ docker/                 # Containers
+â”‚   â””â”€â”€ docker-compose.yml  # MongoDB + Mongo Express
+â””â”€â”€ requirements.txt        # DependÃªncias Python
 ```
 
-## ??? Tecnologias
+## ğŸ› ï¸ Tecnologias
 
-| Tecnologia | Versão | Uso |
+| Tecnologia | VersÃ£o | Uso |
 |------------|--------|-----|
 | Python | 3.8+ | Linguagem principal |
 | MongoDB | 7.0+ | Base de dados |
-| Pandas | Latest | Manipulação de dados |
+| Pandas | Latest | ManipulaÃ§Ã£o de dados |
 | PyMongo | Latest | Driver MongoDB |
-| Docker | Latest | Containerização |
+| Docker | Latest | ContainerizaÃ§Ã£o |
 | Colorama | Latest | Logs coloridos |
 
-## ?? Resultados
+## ğŸ“ˆ Resultados
 
-A agregação final agrupa os carros por país da montadora:
+A agregaÃ§Ã£o final agrupa os carros por paÃ­s da montadora:
 
-| País | Quantidade | Carros |
+| PaÃ­s | Quantidade | Carros |
 |------|------------|--------|
 | Alemanha | 1 | Polo (Volkswagen) |
 | EUA | 2 | Onix (Chevrolet), Fiesta (Ford) |
-| França | 1 | Sandero (Renault) |
-| Japão | 1 | City (Honda) |
+| FranÃ§a | 1 | Sandero (Renault) |
+| JapÃ£o | 1 | City (Honda) |
 
-## ?? Monitoramento
+## ğŸ“Š Monitoramento
 
 - **MongoDB Compass**: Interface visual para MongoDB
 - **Mongo Express**: Web UI (Docker) - `http://localhost:8081`
 - **Logs**: Feedback detalhado em tempo real
 - **Exports**: Arquivos JSON com resultados
 
-## ?? Desenvolvimento
+## ğŸ’» Desenvolvimento
 
-### Pré-requisitos
+### PrÃ©-requisitos
 - Python 3.8+
 - MongoDB 7.0+
 - Git
 
-### Instalação de Desenvolvimento
+### InstalaÃ§Ã£o de Desenvolvimento
 ```bash
 git clone https://github.com/SEU-USUARIO/Case-Engenheiro-dados.git
 cd Case-Engenheiro-dados
@@ -182,7 +182,7 @@ pip install -r requirements.txt
 
 ### Testes
 ```bash
-# Testar dependências
+# Testar dependÃªncias
 python test_dependencies.py
 
 # Teste simples
@@ -192,26 +192,26 @@ python simple_test.py
 python scripts/main_local.py
 ```
 
-## ?? Documentação Adicional
+## ğŸ“š DocumentaÃ§Ã£o Adicional
 
-- [Instalação Local Windows](docs/instalacao_local_windows.md)
-- [Instalação Local Linux](docs/instalacao_local_linux.md)
-- [Conexão Remota](docs/conexao_remota.md)
+- [InstalaÃ§Ã£o Local Windows](docs/instalacao_local_windows.md)
+- [InstalaÃ§Ã£o Local Linux](docs/instalacao_local_linux.md)
+- [ConexÃ£o Remota](docs/conexao_remota.md)
 - [Troubleshooting](docs/troubleshooting.md)
 
-## ?? Contribuição
+## ğŸ¤ ContribuiÃ§Ã£o
 
 1. Fork o projeto
 2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+3. Commit suas mudanÃ§as (`git commit -m 'Add some AmazingFeature'`)
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
 
-## ?? Licença
+## ğŸ“„ LicenÃ§a
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto estÃ¡ sob a licenÃ§a MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
 
-## ?? Contato
+## ğŸ“ Contato
 
 **Nome do Desenvolvedor**
 - GitHub: [@SEU-USUARIO](https://github.com/SEU-USUARIO)
@@ -221,6 +221,6 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para deta
 ---
 
 <div align="center">
-  <strong>?? Desafio DataOps - MongoDB & Python ??</strong><br>
-  Desenvolvido com ?? para processamento eficiente de dados
+  <strong>ğŸš€ Desafio DataOps - MongoDB & Python ğŸš€</strong><br>
+  Desenvolvido com â¤ï¸ para processamento eficiente de dados
 </div>
