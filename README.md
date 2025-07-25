@@ -214,9 +214,9 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para de
 ## 📞 Contato
 
 **Nome do Desenvolvedor**
-- GitHub: [@SEU-USUARIO](https://github.com/SEU-USUARIO)
-- LinkedIn: [Seu LinkedIn](https://linkedin.com/in/seu-perfil)
-- Email: seu.email@example.com
+- GitHub: [@SEU-USUARIO](https://github.com/alex-des-santos)
+- LinkedIn: [Seu LinkedIn](https://linkedin.com/in/alex-des-santos)
+- Email: eu@alexsantos.pro
 
 ---
 
